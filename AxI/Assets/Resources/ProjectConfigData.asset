@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ProjectConfigData
   m_EditorClassIdentifier: 
   projectID: bb513b7e-e3f4-49fc-84a3-dd7e54a9e776
-  chainID: Please enter your chain ID
-  chain: Please enter your chain i.e Ethereum, Binance, Cronos
-  network: Please enter your network i.e Mainnet, Testnet
-  symbol: Please enter your chain's native symbol i.e Eth, Cro
-  rpc: Please enter your RPC endpoint
+  chainID: 11155111
+  chain: Sepolia
+  network: Ethereum
+  symbol: SETH
+  rpc: https://nd-685-826-685.p2pify.com/06f123b122795ac19ef306796ab4056a
