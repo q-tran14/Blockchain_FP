@@ -256,7 +256,7 @@
       "url": "https://packages.unity.com"
     },
     "io.chainsafe.web3-unity": {
-      "version": "2.5.0",
+      "version": "2.5.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -265,12 +265,12 @@
       "url": "https://package.openupm.com"
     },
     "io.chainsafe.web3-unity.web3auth": {
-      "version": "2.5.1",
+      "version": "2.5.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.nuget.newtonsoft-json": "3.0.2",
-        "io.chainsafe.web3-unity": "2.5.0"
+        "io.chainsafe.web3-unity": "2.5.2"
       },
       "url": "https://package.openupm.com"
     },
