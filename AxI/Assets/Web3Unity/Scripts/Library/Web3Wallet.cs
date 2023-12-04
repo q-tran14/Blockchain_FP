@@ -55,7 +55,7 @@ public class Web3Wallet
         // check if clipboard response is valid
         if (clipBoard.StartsWith("0x") && clipBoard.Length == 132)
         {
-            return clipBoard;
+            return (clipBoard);
         }
         else
         {

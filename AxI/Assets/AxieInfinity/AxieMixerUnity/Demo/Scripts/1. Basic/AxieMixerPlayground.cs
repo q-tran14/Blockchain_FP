@@ -23,6 +23,7 @@ namespace Game
         [SerializeField] RectTransform rootTF;
 
         Axie2dBuilder builder => Mixer.Builder;
+
         const bool USE_GRAPHIC = true;
         int accessoryIdx = 1;
 
@@ -342,7 +343,7 @@ namespace Game
             }
         }
 
-        void ProcessMixer(string axieId, string genesStr, bool isGraphic)
+        void ProcessMixer(string axieId, string genesStr, bool isGraphic)   //Lụm
         {
             if (string.IsNullOrEmpty(genesStr))
             {
@@ -359,14 +360,14 @@ namespace Game
             var builderResult = builder.BuildSpineFromGene(axieId, genesStr, meta, scale, isGraphic);
 
             //Test
-            if (isGraphic)
-            {
-                SpawnSkeletonGraphic(builderResult);
-            }
-            else
-            {
+            //if (isGraphic)
+            //{
+            //    SpawnSkeletonGraphic(builderResult);
+            //}
+            //else
+            //{
                 SpawnSkeletonAnimation(builderResult);
-            }
+            //}
         }
 
         void ClearAll()
@@ -383,7 +384,7 @@ namespace Game
             }
         }
 
-        void SpawnSkeletonAnimation(Axie2dBuilderResult builderResult)
+        void SpawnSkeletonAnimation(Axie2dBuilderResult builderResult)      //Lụm
         {
             ClearAll();
             GameObject go = new GameObject("DemoAxie");
@@ -406,7 +407,7 @@ namespace Game
             runtimeSkeletonAnimation.skeleton.FindSlot("shadow").Attachment = null;
         }
 
-        void SpawnSkeletonGraphic(Axie2dBuilderResult builderResult)
+        void SpawnSkeletonGraphic(Axie2dBuilderResult builderResult)        //Lụm
         {
             ClearAll();
 
@@ -440,11 +441,11 @@ namespace Game
             else
             {
                 if (isFetchingGenes) return;
-                StartCoroutine(GetAxiesGenes(axieIdInputField.text));
+                StartCoroutine(GetAxiesGenes(axieIdInputField.text));   // Lụm
             }
         }
 
-        public IEnumerator GetAxiesGenes(string axieId)
+        public IEnumerator GetAxiesGenes(string axieId)     // Lụm
         {
             isFetchingGenes = true;
             string searchString = "{ axie (axieId: \"" + axieId + "\") { id, genes, newGenes}}";
