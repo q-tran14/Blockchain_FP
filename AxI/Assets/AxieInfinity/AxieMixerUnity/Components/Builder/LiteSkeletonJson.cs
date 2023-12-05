@@ -310,7 +310,7 @@ namespace AxieMixer.Unity
 									if (logError)
 									{
 										UnityEngine.Debug.LogWarning($"Error reading attachment: {entry.Key}, skin: {skin}, spineName: {spineName}");
-										//throw new Exception("Error reading attachment: " + entry.Key + ", skin: " + skin, e);
+										throw new Exception("Error reading attachment: " + entry.Key + ", skin: " + skin, e);
 									}
 								}
 							}

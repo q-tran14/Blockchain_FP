@@ -23,7 +23,7 @@ public class SceneLoader : MonoBehaviour
     }
     public void Run()
     {
-        StartCoroutine("_FadingOutI",i);
+        StartCoroutine("_FadingOut",i);
 
     }
     public IEnumerator _FadingOut()

@@ -360,14 +360,14 @@ namespace Game
             var builderResult = builder.BuildSpineFromGene(axieId, genesStr, meta, scale, isGraphic);
 
             //Test
-            //if (isGraphic)
-            //{
-            //    SpawnSkeletonGraphic(builderResult);
-            //}
-            //else
-            //{
+            if (isGraphic)
+            {
+                SpawnSkeletonGraphic(builderResult);
+            }
+            else
+            {
                 SpawnSkeletonAnimation(builderResult);
-            //}
+            }
         }
 
         void ClearAll()

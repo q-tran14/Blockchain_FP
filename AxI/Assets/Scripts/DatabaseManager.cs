@@ -50,12 +50,12 @@ public class DatabaseManager : MonoBehaviour
         else
         {
             //Download account data from Data
-            var list = doc.ToList()[2].Value.ToJson();
+            var list = doc.ToList()[4].Value.ToJson();
 
             List<int> axieIDs = JsonConvert.DeserializeObject<List<int>>(list);
             user.setAxieIDs(axieIDs);
-            user.setCreateTime(doc.GetElement(3).Value.ToString());
-            user.setLastLoginTime(doc.GetElement(4).Value.ToString());
+            user.setCreateTime(doc.GetElement(2).Value.ToString());
+            user.setLastLoginTime(doc.GetElement(3).Value.ToString());
         }
         DontDestroyOnLoad(user);
     }
