@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Video;
 using Debug = UnityEngine.Debug;
 
 public class WalletLogin: MonoBehaviour
@@ -14,11 +15,17 @@ public class WalletLogin: MonoBehaviour
     ProjectConfigScriptableObject projectConfigSO = null;
     public Toggle rememberMe;
     public string account;
+
+    public GameObject background;
+
     public GameObject panel;
     public GameObject loginBtn;
     public GameObject toggleBox;
+
     public GameObject loading;
+    public GameObject loadingVideo;
     public GameObject loginError;
+
     public GameObject DBManager;
     void Start() {
         projectConfigSO = (ProjectConfigScriptableObject)Resources.Load("ProjectConfigData", typeof(ScriptableObject));
@@ -67,8 +74,11 @@ public class WalletLogin: MonoBehaviour
                 if (rememberMe.isOn) PlayerPrefs.SetInt("RememberMe", 1);
                 else PlayerPrefs.SetInt("RememberMe", 0);
                 DBManager.SetActive(true);
+                DontDestroyOnLoad(DBManager);
                 print("Account: " + account);
-                
+
+                // upload user data
+                DBManager.GetComponent<DatabaseManager>().CheckData();
                 LoadHome();
             }
         }
@@ -86,11 +96,21 @@ public class WalletLogin: MonoBehaviour
         // load next scene
         var scene = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
         scene.allowSceneActivation = false;
+        
+        // Disable UI
         panel.SetActive(false);
         loginBtn.SetActive(false);
         toggleBox.SetActive(false);
+
+        // Enable loading Object
+        loadingVideo.SetActive(true);
         loading.SetActive(true);
-        await Task.Delay(3000);
+
+        // Disable background
+        SceneLoader.SInstance.setImage(background.GetComponent<Image>());
+        SceneLoader.SInstance.Run();
+        
+        await Task.Delay(5000);
         scene.allowSceneActivation = true;
 
     }

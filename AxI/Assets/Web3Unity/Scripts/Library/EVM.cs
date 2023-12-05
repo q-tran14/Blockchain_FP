@@ -43,7 +43,6 @@ public class EVM
         using (UnityWebRequest webRequest = UnityWebRequest.Post(url, form))
         {
             await webRequest.SendWebRequest();
-            Debug.Log(System.Text.Encoding.UTF8.GetString(webRequest.downloadHandler.data));
             Response<string> data = JsonUtility.FromJson<Response<string>>(System.Text.Encoding.UTF8.GetString(webRequest.downloadHandler.data));
             return data.response;
         }

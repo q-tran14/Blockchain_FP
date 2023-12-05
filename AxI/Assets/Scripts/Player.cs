@@ -1,19 +1,47 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]private string account;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private string account;
+    [SerializeField] private string createAccTime;
+    [SerializeField] private string lastLogin;
+    [SerializeField] private List<int> axieIDs;
+    
+    public void setAccount(string acc)
     {
-        account = PlayerPrefs.GetString("Account");
+        account = acc;
+    }
+    public void addAxie(int Id)
+    {
+        axieIDs.Add(Id);
+        Debug.Log($"Added {Id}");
+    }
+    public void setAxieIDs(List<int> IDs)
+    {
+        axieIDs = IDs;
+    }
+    public void setCreateTime(string time)
+    {
+        createAccTime = time;
+    }
+    public void newBie()
+    {
+        createAccTime = DateTime.Now.Date.ToString();
+    }
+    public void setLastLoginTime(string time)
+    {
+        lastLogin = time.ToString();
+    }
+    public string DataToJson()
+    {
+        return JsonUtility.ToJson(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    public Player ParseToData(string json)
     {
-        
+        return JsonUtility.FromJson<Player>(json); ;
     }
 }

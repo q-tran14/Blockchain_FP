@@ -6,13 +6,15 @@ using MongoDB.Driver;
 using UnityEngine.Networking;
 using System;
 using System.Text;
+using System.Linq;
+using Unity.VisualScripting;
+using Newtonsoft.Json;
 
 public class DatabaseManager : MonoBehaviour
 {
     const string connectionUri = "mongodb+srv://quantran14:quantran14@cluster0.ozqblox.mongodb.net/?retryWrites=true&w=majority";
     IMongoDatabase database;
     IMongoCollection<BsonDocument> collection;
-    public string json;
     // Start is called before the first frame update
     void Awake()
     {
@@ -22,18 +24,6 @@ public class DatabaseManager : MonoBehaviour
         // Access into Cluster and Database to get the Collection
         database = client.GetDatabase("Player");   // Player => name of Database
         collection = database.GetCollection<BsonDocument>("PlayerAxie");  // PlayerAxie => name of Collection
-        FilterDefinition<BsonDocument> filter = new BsonDocument("PlayerAddress", PlayerPrefs.GetString("Account"));    // Create a Filter has title is nameOfPic
-
-        
-        if (collection.Find(filter).FirstOrDefault() == null)
-        {
-            //// Add account into DB
-            //var jsonString = PlayerPrefs.GetString("Account");
-            //var acc = JsonUtility.FromJson<WalletLogin>(jsonString);
-            //StartCoroutine(Upload(_playerData.Stringify(), result => {
-            //    Debug.Log(result);
-            //}));
-        }
     }
 
     public void Upload(string json)
@@ -42,35 +32,31 @@ public class DatabaseManager : MonoBehaviour
         collection.InsertOneAsync(doc);
     }
 
-    void Receive()
+    public void CheckData()
     {
+        Player user = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        FilterDefinition<BsonDocument> filter = new BsonDocument("account", PlayerPrefs.GetString("Account"));    // Create a Filter has title is Account
+        BsonDocument doc = collection.Find(filter).FirstOrDefault();
+        user.setAccount(PlayerPrefs.GetString("Account"));
+        if (doc == null)
+        {
+            // Add account into DB
+            user.newBie();
+            //user.setLastLoginTime(DateTime.Now);
+            string data =  user.DataToJson();
+            Debug.Log(data);
+            Upload(data);
+        }
+        else
+        {
+            //Download account data from Data
+            var list = doc.ToList()[2].Value.ToJson();
 
+            List<int> axieIDs = JsonConvert.DeserializeObject<List<int>>(list);
+            user.setAxieIDs(axieIDs);
+            user.setCreateTime(doc.GetElement(3).Value.ToString());
+            user.setLastLoginTime(doc.GetElement(4).Value.ToString());
+        }
+        DontDestroyOnLoad(user);
     }
-    //IEnumerator Upload(string profile, System.Action<bool> callback = null)
-    //{
-    //    using (UnityWebRequest request = new UnityWebRequest("http://localhost:3000/plummies", "POST"))
-    //    {
-    //        request.SetRequestHeader("Content-Type", "application/json");
-    //        byte[] bodyRaw = Encoding.UTF8.GetBytes(profile);
-    //        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-    //        request.downloadHandler = new DownloadHandlerBuffer();
-    //        yield return request.SendWebRequest();
-
-    //        if (request.isNetworkError || request.isHttpError)
-    //        {
-    //            Debug.Log(request.error);
-    //            if (callback != null)
-    //            {
-    //                callback.Invoke(false);
-    //            }
-    //        }
-    //        else
-    //        {
-    //            if (callback != null)
-    //            {
-    //                callback.Invoke(request.downloadHandler.text != "{}");
-    //            }
-    //        }
-    //    }
-    //}
 }
