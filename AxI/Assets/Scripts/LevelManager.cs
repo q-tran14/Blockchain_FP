@@ -9,13 +9,32 @@ using AxieMixer.Unity;
 using Newtonsoft.Json.Linq;
 using Spine.Unity;
 using UnityEngine.Networking;
-
+using Unity.VisualScripting;
+[System.Serializable]
+public class Axie
+{
+    public int order;
+    public string id;
+    public GameObject axie;
+    public Axie(int or, string axieID, GameObject axieOj)
+    {
+        order = or;
+        id = axieID;
+        axie = axieOj;
+    }
+    public override string ToString() => $"{order}+{id}+{axie.name}";
+}
 public class LevelManager : MonoBehaviour
 {
+    [SerializeField]
+    
     public static LevelManager LInstance { get; private set; }
     public int axieSelect;
     public Vector2 spawnPos;
-    [SerializeField] RectTransform rootTF;
+
+    [SerializeField] public List<Axie> axies;
+
+    [SerializeField] public RectTransform rootTF;
     Axie2dBuilder builder => Mixer.Builder;
     bool isFetchingGenes = false;
 
@@ -43,7 +62,7 @@ public class LevelManager : MonoBehaviour
     //    yield return new WaitForEndOfFrame();
     //}
 
-        void ProcessMixer(string axieId, string genesStr, bool isGraphic)   //Lụm
+        void ProcessMixer(string axieId, string genesStr, bool isGraphic, int order)   //Lụm
         {
             if (string.IsNullOrEmpty(genesStr))
             {
@@ -62,7 +81,7 @@ public class LevelManager : MonoBehaviour
             //Test
             if (isGraphic)
             {
-                SpawnSkeletonGraphic(builderResult);
+                SpawnSkeletonGraphic(builderResult,axieId, order);
             }
             else
             {
@@ -92,8 +111,8 @@ public class LevelManager : MonoBehaviour
             runtimeSkeletonAnimation.skeleton.FindSlot("shadow").Attachment = null;
         }
 
-        void SpawnSkeletonGraphic(Axie2dBuilderResult builderResult)        //Lụm
-        {
+        void SpawnSkeletonGraphic(Axie2dBuilderResult builderResult, string axieId, int order)        //Lụm
+        {   
             var skeletonGraphic = SkeletonGraphic.NewSkeletonGraphicGameObject(builderResult.skeletonDataAsset, rootTF, builderResult.sharedGraphicMaterial);
             skeletonGraphic.rectTransform.sizeDelta = new Vector2(1, 1);
             skeletonGraphic.rectTransform.localScale = new Vector3(0.33f,0.33f,0.1f);
@@ -101,7 +120,7 @@ public class LevelManager : MonoBehaviour
             skeletonGraphic.Initialize(true);
             skeletonGraphic.Skeleton.SetSkin("default");
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-
+            
             skeletonGraphic.gameObject.AddComponent<AutoBlendAnimGraphicController>();
             skeletonGraphic.AnimationState.SetAnimation(0, "action/idle/normal", true);
 
@@ -112,9 +131,13 @@ public class LevelManager : MonoBehaviour
             {
                 skeletonGraphic.gameObject.AddComponent<MysticIdGraphicController>().Init(bodyClass, bodyId);
             }
-        }
 
-        public IEnumerator GetAxiesGenes(string axieId, bool UIUse)     // Lụm
+            Axie a = new Axie(order, axieId, skeletonGraphic.gameObject);
+            axies.Add(a);
+            if (axies.Count > 1) skeletonGraphic.gameObject.SetActive(false);
+    }
+
+        public IEnumerator GetAxiesGenes(string axieId, bool UIUse, int order)     // Lụm
         {
             isFetchingGenes = true;
             string searchString = "{ axie (axieId: \"" + axieId + "\") { id, genes, newGenes}}";
@@ -136,8 +159,8 @@ public class LevelManager : MonoBehaviour
                 {
                     JObject jResult = JObject.Parse(result);
                     string genesStr = (string)jResult["data"]["axie"]["newGenes"];
-                    Debug.Log(genesStr);
-                    ProcessMixer(axieId, genesStr, UIUse);
+                    //Debug.Log(genesStr);
+                    ProcessMixer(axieId, genesStr, UIUse, order);
                 }
             }
             isFetchingGenes = false;

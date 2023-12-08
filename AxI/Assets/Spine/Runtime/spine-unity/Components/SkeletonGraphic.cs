@@ -154,8 +154,11 @@ namespace Spine.Unity {
 		/// <param name="material">Material for the canvas renderer to use. Usually, the default SkeletonGraphic material will work.</param>
 		public static SkeletonGraphic NewSkeletonGraphicGameObject (SkeletonDataAsset skeletonDataAsset, Transform parent, Material material) {
 			var sg = SkeletonGraphic.AddSkeletonGraphicComponent(new GameObject("New Spine GameObject"), skeletonDataAsset, material);
-			if (parent != null) sg.transform.SetParent(parent, false);
-			return sg;
+			if (parent != null)
+			{
+				sg.transform.SetParent(parent, false);
+			}
+            return sg;
 		}
 
 		/// <summary>Add a SkeletonGraphic component to a GameObject.</summary>

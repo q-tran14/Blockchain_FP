@@ -8,19 +8,19 @@ public class Player : MonoBehaviour
     [SerializeField] public string account;
     [SerializeField] public string createAccTime;
     [SerializeField] public string lastLogin;
-    [SerializeField] public List<int> axieIDs;
+    [SerializeField] public List<string> axieIDs;
     
     
     public void setAccount(string acc)
     {
         account = acc;
     }
-    public void addAxie(int Id)
+    public void addAxie(string Id)
     {
         axieIDs.Add(Id);
         Debug.Log($"Added {Id}");
     }
-    public void setAxieIDs(List<int> IDs)
+    public void setAxieIDs(List<string> IDs)
     {
         axieIDs = IDs;
     }
@@ -35,10 +35,6 @@ public class Player : MonoBehaviour
 
     public int getTotalAxies() {
         return axieIDs.Count;
-    }
-
-    public int getAxieID(int index) {
-        return axieIDs[index];
     }
 
     public void newBie()

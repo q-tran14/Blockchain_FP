@@ -52,7 +52,7 @@ public class DatabaseManager : MonoBehaviour
             //Download account data from Data
             var list = doc.ToList()[4].Value.ToJson();
 
-            List<int> axieIDs = JsonConvert.DeserializeObject<List<int>>(list);
+            List<string> axieIDs = JsonConvert.DeserializeObject<List<string>>(list);
             user.setAxieIDs(axieIDs);
             user.setCreateTime(doc.GetElement(2).Value.ToString());
             user.setLastLoginTime(doc.GetElement(3).Value.ToString());

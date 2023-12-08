@@ -158,37 +158,6 @@ RectTransform:
   m_AnchoredPosition: {x: 35, y: -370}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &189964121
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 189964122}
-  m_Layer: 0
-  m_Name: Axie
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &189964122
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 189964121}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -958.4565, y: -541.0597, z: -0.1011274}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1583288451}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &426153560
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,6 +555,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   axieSelect: 0
   spawnPos: {x: 0, y: 0}
+  axies: []
   rootTF: {fileID: 89900360}
 --- !u!4 &681519981
 Transform:
@@ -1579,7 +1549,6 @@ RectTransform:
   - {fileID: 1305079366}
   - {fileID: 1622171742}
   - {fileID: 1774263813}
-  - {fileID: 189964122}
   - {fileID: 492827528}
   - {fileID: 89900360}
   m_Father: {fileID: 0}
@@ -1864,8 +1833,7 @@ MonoBehaviour:
   addressPlayer: {fileID: 989025435}
   axieNum: {fileID: 1542893141}
   axieSelected: 0
-  numberAxieInList: 0
-  listAxiesActivate: {fileID: 89900359}
+  listAxies: {fileID: 89900359}
 --- !u!4 &2084358708
 Transform:
   m_ObjectHideFlags: 0

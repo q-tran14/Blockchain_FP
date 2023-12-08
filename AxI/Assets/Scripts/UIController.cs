@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 using Spine.Unity;
 using UnityEngine.Networking;
 using Jint.Native.Number;
-
+using Unity.VisualScripting;
 
 public class UIController : MonoBehaviour
 {
@@ -18,13 +18,10 @@ public class UIController : MonoBehaviour
     public Text axieNum;
     public int axieSelected;
 
-    public int numberAxieInList;
-    public GameObject listAxiesActivate;
-
+    public GameObject listAxies;
     // Start is called before the first frame update
     void Start()
     {
-        numberAxieInList = 0;
         // player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();   
         // addressPlayer.text = player.getPlayerAccout();
         // UpdateUI();
@@ -37,22 +34,20 @@ public class UIController : MonoBehaviour
     }
 
    public void loadList() {
-    List<int> l = new List<int>
-    {
-        1568,
-        1569,
-        1570,
-        3212,
-        322,
-        111
-    };
+        List<int> l = new List<int>
+        {
+            1568,
+            1569,
+            1570,
+            3212,
+            322,
+            111
+        };
+
         //load list of axies - BUG
-        foreach (int i in l) {
-            StartCoroutine(LevelManager.LInstance.GetAxiesGenes(i.ToString(),true));
-            numberAxieInList += 1;
-            if(numberAxieInList != 1){
-                listAxiesActivate.transform.GetChild(numberAxieInList - 1).gameObject.SetActive(false);
-            }
+        for (int i = 0; i < l.Count; i++)
+        {
+            StartCoroutine(LevelManager.LInstance.GetAxiesGenes(l[i].ToString(), true, i));
         }
     }
 

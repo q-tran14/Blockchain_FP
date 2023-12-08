@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class AxieData : ScriptableObject
 {
-    private int axieID;
+    private string axieID;
     private string NameAxie;
 
     
