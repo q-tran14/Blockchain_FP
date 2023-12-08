@@ -409,12 +409,13 @@ namespace Game
 
         void SpawnSkeletonGraphic(Axie2dBuilderResult builderResult)        //Lụm
         {
+            
             ClearAll();
 
             var skeletonGraphic = SkeletonGraphic.NewSkeletonGraphicGameObject(builderResult.skeletonDataAsset, rootTF, builderResult.sharedGraphicMaterial);
-            skeletonGraphic.rectTransform.sizeDelta = new Vector2(1, 1);
-            skeletonGraphic.rectTransform.localScale = Vector3.one;
-            skeletonGraphic.rectTransform.anchoredPosition = new Vector2(0f, -260f);
+            skeletonGraphic.rectTransform.sizeDelta = new Vector2(1, 1);    // Edit 
+            skeletonGraphic.rectTransform.localScale = Vector3.one;     // Edit
+            skeletonGraphic.rectTransform.anchoredPosition = new Vector2(0f, -260f);    // Edit
             skeletonGraphic.Initialize(true);
             skeletonGraphic.Skeleton.SetSkin("default");
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
@@ -428,7 +429,7 @@ namespace Game
              builderResult.adultCombo.TryGetValue("body-id", out var bodyId))
             {
                 skeletonGraphic.gameObject.AddComponent<MysticIdGraphicController>().Init(bodyClass, bodyId);
-            }
+            } 
         }
 
         bool isFetchingGenes = false;
