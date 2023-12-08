@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private string account;
-    [SerializeField] private string createAccTime;
-    [SerializeField] private string lastLogin;
-    [SerializeField] private List<int> axieIDs;
+    [SerializeField] public string account;
+    [SerializeField] public string createAccTime;
+    [SerializeField] public string lastLogin;
+    [SerializeField] public List<int> axieIDs;
+    
     
     public void setAccount(string acc)
     {
@@ -27,6 +28,19 @@ public class Player : MonoBehaviour
     {
         createAccTime = time;
     }
+
+    public string getPlayerAccout() {
+        return account;
+    }
+
+    public int getTotalAxies() {
+        return axieIDs.Count;
+    }
+
+    public int getAxieID(int index) {
+        return axieIDs[index];
+    }
+
     public void newBie()
     {
         createAccTime = DateTime.Now.Date.ToString();
