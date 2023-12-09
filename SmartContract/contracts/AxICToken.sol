@@ -10,18 +10,19 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 contract AxICToken is ERC721, ERC721URIStorage, ERC721Pausable, Ownable, ERC721Burnable{
     
     uint256 private _nextTokenId;
+    event Mint(address minter, uint tokenId);
 
     constructor(address initialOwner) ERC721("AxICToken", "AxI") Ownable(initialOwner) {}
 
-    function pause() public onlyOwner {
+    function pause() public {
         _pause();
     }
 
-    function unpause() public onlyOwner {
+    function unpause() public {
         _unpause();
     }
 
-    function safeMint(address to, string memory uri) public onlyOwner {
+    function safeMint(address to, string memory uri) public {
         uint256 tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
