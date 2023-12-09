@@ -653,7 +653,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 748288201}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2084358707}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: PrevAxie
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &748288201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1170,7 +1182,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1305079368}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2084358707}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: NextAxie
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1305079368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1834,6 +1858,8 @@ MonoBehaviour:
   axieNum: {fileID: 1542893141}
   axieSelected: 0
   listAxies: {fileID: 89900359}
+  nextButton: {fileID: 1305079367}
+  prevButton: {fileID: 748288200}
 --- !u!4 &2084358708
 Transform:
   m_ObjectHideFlags: 0
