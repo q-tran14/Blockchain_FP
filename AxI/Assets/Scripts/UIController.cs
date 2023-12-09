@@ -18,8 +18,8 @@ public class UIController : MonoBehaviour
     public Text axieNum;
     public int axieSelected;
     public GameObject listAxies;
-    public Button nextButton;
-    public Button prevButton;
+    //public Button nextButton;
+    //public Button prevButton;
     private int currentAxiesIndex = 0;
 
     // Start is called before the first frame update
@@ -29,8 +29,8 @@ public class UIController : MonoBehaviour
         // addressPlayer.text = player.getPlayerAccout();
         // UpdateUI();
         loadList();
-        nextButton.onClick.AddListener(NextAxie);
-        prevButton.onClick.AddListener(PrevAxie);
+        //nextButton.onClick.AddListener(NextAxie);
+        //prevButton.onClick.AddListener(PrevAxie);
     }
 
 
@@ -64,18 +64,30 @@ public class UIController : MonoBehaviour
     public void NextAxie() {
         if (currentAxiesIndex < LevelManager.LInstance.axies.Count - 1) {
             // tới vị trí kế
+            LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(false);
             currentAxiesIndex++;
             LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(true);
-            LevelManager.LInstance.axies[currentAxiesIndex - 1].axie.SetActive(false);
+        }
+        if (currentAxiesIndex == LevelManager.LInstance.axies.Count - 1) //BUG
+        {
+            LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(false);
+            currentAxiesIndex = 0;
+            LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(true);
         }
     }
 
     public void PrevAxie() {
         if (currentAxiesIndex > 0) {
             // lùi 1 vị trí
+            LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(false);
             currentAxiesIndex--;
             LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(true);
-            LevelManager.LInstance.axies[currentAxiesIndex + 1].axie.SetActive(false);
+        }
+        if (currentAxiesIndex == 0) //BUG
+        {
+            LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(false);
+            currentAxiesIndex = LevelManager.LInstance.axies.Count - 1;
+            LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(true);
         }
     }
 
