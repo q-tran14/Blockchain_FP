@@ -16,11 +16,10 @@ public class UIController : MonoBehaviour
     public Player player;
     public Text addressPlayer;
     public Text axieNum;
-    public int axieSelected;
     public GameObject listAxies;
-    //public Button nextButton;
-    //public Button prevButton;
-    private int currentAxiesIndex = 0;
+    public Button nextButton;
+    public Button prevButton;
+    public int currentAxiesIndex = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -29,8 +28,6 @@ public class UIController : MonoBehaviour
         // addressPlayer.text = player.getPlayerAccout();
         // UpdateUI();
         loadList();
-        //nextButton.onClick.AddListener(NextAxie);
-        //prevButton.onClick.AddListener(PrevAxie);
     }
 
 
@@ -38,55 +35,59 @@ public class UIController : MonoBehaviour
         axieNum.text = player.getTotalAxies().ToString();
     }
 
-  public void loadList() {
-    List<int> l = new List<int>
-    {
-        1568,
-        1569,
-        1570,
-        3212,
-        322,
-        111
-    };
+    public void loadList() {
+        List<int> l = new List<int>
+        {
+            1568,
+            1569,
+            1570,
+            3212,
+            322,
+            111
+        };
 
-    // Load list of axies
-    StartCoroutine(LoadAxiesSequentially(l));
+        // Load list of axies
+        StartCoroutine(LoadAxiesSequentially(l));
+        nextButton.onClick.AddListener(NextAxie);
+        prevButton.onClick.AddListener(PrevAxie);
     }
 
     private IEnumerator LoadAxiesSequentially(List<int> axies) {
         for (int i = 0; i < axies.Count; i++) {
             yield return StartCoroutine(LevelManager.LInstance.GetAxiesGenes(axies[i].ToString(), true, i));
             currentAxiesIndex = i;
-            Debug.Log(currentAxiesIndex);
         }
+        currentAxiesIndex = 0;
     }
 
     public void NextAxie() {
-        if (currentAxiesIndex < LevelManager.LInstance.axies.Count - 1) {
-            // tới vị trí kế
-            LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(false);
-            currentAxiesIndex++;
-            LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(true);
-        }
-        if (currentAxiesIndex == LevelManager.LInstance.axies.Count - 1) //BUG
+        if (currentAxiesIndex == LevelManager.LInstance.axies.Count - 1)
         {
             LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(false);
             currentAxiesIndex = 0;
             LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(true);
         }
+        else
+        {
+            // tới vị trí kế
+            LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(false);
+            currentAxiesIndex++;
+            LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(true);
+        }
     }
 
     public void PrevAxie() {
-        if (currentAxiesIndex > 0) {
-            // lùi 1 vị trí
-            LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(false);
-            currentAxiesIndex--;
-            LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(true);
-        }
-        if (currentAxiesIndex == 0) //BUG
+        if (currentAxiesIndex == 0)
         {
             LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(false);
             currentAxiesIndex = LevelManager.LInstance.axies.Count - 1;
+            LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(true);
+        }
+        else
+        {
+            // lùi 1 vị trí
+            LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(false);
+            currentAxiesIndex--;
             LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(true);
         }
     }
