@@ -31,6 +31,7 @@
         public static LevelManager LInstance { get; private set; }
         public int axieSelect;
         public Vector2 spawnPos;
+        public bool flag = true;
 
         [SerializeField] public List<Axie> axies;
 
@@ -67,6 +68,7 @@
                 if (string.IsNullOrEmpty(genesStr))
                 {
                     Debug.LogError($"[{axieId}] genes not found!!!");
+                    flag = false;
                     return;
                 }
                 float scale = 0.007f;
@@ -135,11 +137,12 @@
                 Axie a = new Axie(order, axieId, skeletonGraphic.gameObject);
                 axies.Add(a);
                 if (axies.Count > 1) skeletonGraphic.gameObject.SetActive(false);
-        }
+            }
 
             public IEnumerator GetAxiesGenes(string axieId, bool UIUse, int order)     // Lụm
             {
                 isFetchingGenes = true;
+                
                 string searchString = "{ axie (axieId: \"" + axieId + "\") { id, genes, newGenes}}";
                 JObject jPayload = new JObject();
                 jPayload.Add(new JProperty("query", searchString));
@@ -159,7 +162,6 @@
                     {
                         JObject jResult = JObject.Parse(result);
                         string genesStr = (string)jResult["data"]["axie"]["newGenes"];
-                        //Debug.Log(genesStr);
                         ProcessMixer(axieId, genesStr, UIUse, order);
                     }
                 }

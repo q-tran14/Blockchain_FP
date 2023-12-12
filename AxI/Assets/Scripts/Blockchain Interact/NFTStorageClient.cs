@@ -129,7 +129,7 @@ namespace NFTStorage
         private static readonly HttpClient ipfsClient = new HttpClient();
 
         // nft.storage API key
-        public string apiToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEI3QTQ0RUE2MWE2OEY5QmI3OUM5QTVBNEU0YTA5ODg3OUY0NDYxZGUiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTcwMjA5NjY0NzI5OCwibmFtZSI6IkF4SSJ9.E6hEuQpq2Bc6bEEmKjlW7cj3O5m1VN-ZjKbuHczS7g8";
+        [SerializeField] private string apiToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEI3QTQ0RUE2MWE2OEY5QmI3OUM5QTVBNEU0YTA5ODg3OUY0NDYxZGUiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTcwMjA5NjY0NzI5OCwibmFtZSI6IkF4SSJ9.E6hEuQpq2Bc6bEEmKjlW7cj3O5m1VN-ZjKbuHczS7g8";
 
         /**
         <summary>"Start" is called before the first frame update for initializing "NFTStorageClient"</summary>

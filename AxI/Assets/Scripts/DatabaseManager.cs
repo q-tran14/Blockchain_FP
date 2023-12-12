@@ -13,8 +13,8 @@ using Newtonsoft.Json;
 public class DatabaseManager : MonoBehaviour
 {
     const string connectionUri = "mongodb+srv://quantran14:quantran14@cluster0.ozqblox.mongodb.net/?retryWrites=true&w=majority";
-    IMongoDatabase database;
-    IMongoCollection<BsonDocument> collection;
+    IMongoDatabase database, axieDB;
+    IMongoCollection<BsonDocument> collection, axieCollection;
     // Start is called before the first frame update
     void Awake()
     {
@@ -24,6 +24,8 @@ public class DatabaseManager : MonoBehaviour
         // Access into Cluster and Database to get the Collection
         database = client.GetDatabase("Player");   // Player => name of Database
         collection = database.GetCollection<BsonDocument>("PlayerAxie");  // PlayerAxie => name of Collection
+        axieDB = client.GetDatabase("Axie");
+        axieCollection = database.GetCollection<BsonDocument>("Information");
     }
 
     public void Upload(string json)
@@ -58,5 +60,11 @@ public class DatabaseManager : MonoBehaviour
             user.setLastLoginTime(doc.GetElement(3).Value.ToString());
         }
         DontDestroyOnLoad(user);
+    }
+
+
+    public void UploadAxieData(string axieId, string cid)
+    {
+
     }
 }

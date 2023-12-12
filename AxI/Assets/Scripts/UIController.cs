@@ -10,6 +10,8 @@ using Spine.Unity;
 using UnityEngine.Networking;
 using Jint.Native.Number;
 using Unity.VisualScripting;
+using System;
+using Random = UnityEngine.Random;
 
 public class UIController : MonoBehaviour
 {
@@ -105,5 +107,14 @@ public class UIController : MonoBehaviour
         // Update data to DB        
         Application.Quit();
     }
-
+    
+    public void Gift()
+    {
+        int id;
+        do
+        {
+            id = Random.Range(5, 11932553);
+            StartCoroutine(LevelManager.LInstance.GetAxiesGenes(id.ToString(), true, LevelManager.LInstance.axies.Count));
+        } while (LevelManager.LInstance.flag);
+    }
 }

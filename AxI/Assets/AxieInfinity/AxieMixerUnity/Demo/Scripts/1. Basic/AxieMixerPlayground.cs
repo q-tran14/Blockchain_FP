@@ -468,7 +468,6 @@ namespace Game
                 {
                     JObject jResult = JObject.Parse(result);
                     string genesStr = (string)jResult["data"]["axie"]["newGenes"];
-                    Debug.Log(genesStr);
                     ProcessMixer(axieId, genesStr, USE_GRAPHIC);
                 }
             }

@@ -48,7 +48,7 @@ public class EVM
         }
     }
 
-    public static async Task<string> Call(string _chain, string _network, string _contract, string _abi, string _method, string _args, string _rpc = "")
+    public static async Task<string> Call(string _chain, string _network, string _contract, string _abi, string _method, string _args, string _rpc = "")        //Receive
     {
         WWWForm form = new WWWForm();
         form.AddField("projectId", PlayerPrefs.GetString("ProjectID"));
