@@ -83,10 +83,10 @@ module.exports = {
     // Useful for deploying to a public network.
     // Note: It's important to wrap the provider as a function to ensure truffle uses a new provider every time.
     sepolia:{
-      provider: () => new HDWalletProvider("napkin attend sun rigid recycle wood year random shine soldier disagree agree", "https://sepolia.infura.io/v3/2346b430c7c3472a8f59c171fc9df5fa"),
+      provider: () => new HDWalletProvider('napkin attend sun rigid recycle wood year random shine soldier disagree agree', 'https://sepolia.infura.io/v3/2346b430c7c3472a8f59c171fc9df5fa'),
       network_id: 11155111,// Sepolia's id
       confirmations: 2,    // # of confirmations to wait between deployments. (default: 0)
-      networkCheckTimeout: 10000,
+      networkCheckTimeout: 10000000,
       timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
       skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
     }
@@ -118,8 +118,8 @@ module.exports = {
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {
-      //    enabled: false,
-      //    runs: 200
+      //    enabled: true,
+      //    runs: 10000
       //  },
       //  evmVersion: "byzantium"
       // }

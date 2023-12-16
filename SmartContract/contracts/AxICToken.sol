@@ -16,7 +16,6 @@ contract AxICToken is ERC721, ERC721Enumerable, ERC721URIStorage, ERC721Pausable
     {}
 
     function safeMint(address to, string memory uri) public payable{
-        //require(msg.value == 0.001 ether, "Not enough Money"); msg.value: tiền có của ng đang gửi contract
         uint256 tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
