@@ -46,7 +46,7 @@ contract Marketplace {
 
     // Cancel make item to offer on the marketplace
     function cancelMakeItem(uint256 _tokenId) external {
-        require(items[_tokenId].price > 0, "Item doesn't exist on marketplace");
+        require(items[_tokenId].price > 0, "Item does not exist on marketplace");
         // transfer nft from this smart contract to seller account
         nft.transferFrom(address(this), msg.sender, _tokenId);
         // delete nft in items mapping
@@ -57,7 +57,7 @@ contract Marketplace {
 
     // Update new price for item
     function updateNewPrice(uint256 _tokenId, uint256 _newPrice) external {
-        require(items[_tokenId].price > 0, "Item doesn't exist on marketplace");
+        require(items[_tokenId].price > 0, "Item does not exist on marketplace");
         require(_newPrice > 0 && _newPrice != items[_tokenId].price, "New price must greater than 0 and different from old price");
 
         items[_tokenId].price = _newPrice;
@@ -68,7 +68,7 @@ contract Marketplace {
     function purchaseItem(uint256 _tokenId) external payable{
         uint256 _totalPrice = getTotalPrice(_tokenId);
         Item storage item = items[_tokenId];
-        require(item.price > 0, "Item doesn't exist on marketplace");
+        require(item.price > 0, "Item does not exist on marketplace");
         require(msg.value >= _totalPrice, "Not enough ether to cover item price and market fee");
         require(!item.sold, "Item already sold");
         // pay seller and feeAccount
