@@ -26,8 +26,8 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();   
-        // addressPlayer.text = player.getPlayerAccout();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        addressPlayer.text = player.getPlayerAccout().Substring(0, 7)+ "..." + player.getPlayerAccout().Substring(player.getPlayerAccout().Length - 5, 5);
         // UpdateUI();
         loadList();
     }
@@ -92,11 +92,7 @@ public class UIController : MonoBehaviour
             currentAxiesIndex--;
             LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(true);
         }
-    }
-
-    
-
-
+    } 
 
     public void BattleGame() {
 

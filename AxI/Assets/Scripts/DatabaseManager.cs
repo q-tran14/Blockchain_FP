@@ -12,59 +12,59 @@ using Newtonsoft.Json;
 
 public class DatabaseManager : MonoBehaviour
 {
-    const string connectionUri = "mongodb+srv://quantran14:quantran14@cluster0.ozqblox.mongodb.net/?retryWrites=true&w=majority";
-    IMongoDatabase database, axieDB;
-    IMongoCollection<BsonDocument> collection, axieCollection;
-    // Start is called before the first frame update
-    void Awake()
-    {
-        // Connect Database from MongoDB
-        MongoClient client = new MongoClient(connectionUri);
+    //const string connectionUri = "mongodb+srv://quantran14:quantran14@cluster0.ozqblox.mongodb.net/?retryWrites=true&w=majority";
+    //IMongoDatabase database, axieDB;
+    //IMongoCollection<BsonDocument> collection, axieCollection;
+    //// Start is called before the first frame update
+    //void Awake()
+    //{
+    //    // Connect Database from MongoDB
+    //    MongoClient client = new MongoClient(connectionUri);
         
-        // Access into Cluster and Database to get the Collection
-        database = client.GetDatabase("Player");   // Player => name of Database
-        collection = database.GetCollection<BsonDocument>("PlayerAxie");  // PlayerAxie => name of Collection
-        axieDB = client.GetDatabase("Axie");
-        axieCollection = database.GetCollection<BsonDocument>("Information");
-    }
+    //    // Access into Cluster and Database to get the Collection
+    //    database = client.GetDatabase("Player");   // Player => name of Database
+    //    collection = database.GetCollection<BsonDocument>("PlayerAxie");  // PlayerAxie => name of Collection
+    //    axieDB = client.GetDatabase("Axie");
+    //    axieCollection = database.GetCollection<BsonDocument>("Information");
+    //}
 
-    public void Upload(string json)
-    {
-        BsonDocument doc = BsonDocument.Parse(json);
-        collection.InsertOneAsync(doc);
-    }
+    //public void Upload(string json)
+    //{
+    //    BsonDocument doc = BsonDocument.Parse(json);
+    //    collection.InsertOneAsync(doc);
+    //}
 
-    public void CheckData()
-    {
-        Player user = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        FilterDefinition<BsonDocument> filter = new BsonDocument("account", PlayerPrefs.GetString("Account"));    // Create a Filter has title is Account
-        BsonDocument doc = collection.Find(filter).FirstOrDefault();
-        user.setAccount(PlayerPrefs.GetString("Account"));
-        if (doc == null)
-        {
-            // Add account into DB
-            user.newBie();
-            //user.setLastLoginTime(DateTime.Now);
-            string data =  user.DataToJson();
-            Debug.Log(data);
-            Upload(data);
-        }
-        else
-        {
-            //Download account data from Data
-            var list = doc.ToList()[4].Value.ToJson();
+    //public void CheckData()
+    //{
+    //    Player user = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+    //    FilterDefinition<BsonDocument> filter = new BsonDocument("account", PlayerPrefs.GetString("Account"));    // Create a Filter has title is Account
+    //    BsonDocument doc = collection.Find(filter).FirstOrDefault();
+    //    user.setAccount(PlayerPrefs.GetString("Account"));
+    //    if (doc == null)
+    //    {
+    //        // Add account into DB
+    //        user.newBie();
+    //        //user.setLastLoginTime(DateTime.Now);
+    //        string data =  user.DataToJson();
+    //        Debug.Log(data);
+    //        Upload(data);
+    //    }
+    //    else
+    //    {
+    //        //Download account data from Data
+    //        var list = doc.ToList()[4].Value.ToJson();
 
-            List<string> axieIDs = JsonConvert.DeserializeObject<List<string>>(list);
-            user.setAxieIDs(axieIDs);
-            user.setCreateTime(doc.GetElement(2).Value.ToString());
-            user.setLastLoginTime(doc.GetElement(3).Value.ToString());
-        }
-        DontDestroyOnLoad(user);
-    }
+    //        List<string> axieIDs = JsonConvert.DeserializeObject<List<string>>(list);
+    //        user.setAxieIDs(axieIDs);
+    //        user.setCreateTime(doc.GetElement(2).Value.ToString());
+    //        user.setLastLoginTime(doc.GetElement(3).Value.ToString());
+    //    }
+    //    DontDestroyOnLoad(user);
+    //}
 
 
-    public void UploadAxieData(string axieId, string cid)
-    {
+    //public void UploadAxieData(string axieId, string cid)
+    //{
 
-    }
+    //}
 }

@@ -233,6 +233,8 @@ namespace NFTStorage
             else
             {
                 Debug.Log("Received: " + uwr.downloadHandler.text);
+                NFTStorageUploadResponse res = JsonUtility.FromJson<NFTStorageUploadResponse>(uwr.downloadHandler.text);
+
             }
         }
 
@@ -310,7 +312,7 @@ namespace NFTStorage
             return response;
         }
 
-        /**
+        /** 
         <summary>Check a previously uploaded file using "nft.storage" HTTP API</summary>
         <param name="cid">The alphanumeric hash (base32) which uniquely identifies the file stored in IPFS system</param>
         <returns>A "Task" which result is a "NFTStorageCheckResponse" object, obtained by parsing JSON from "nft.storage" API response (GET /check endpoint)</returns>

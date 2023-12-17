@@ -10,6 +10,8 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract AxICToken is ERC721, ERC721Enumerable, ERC721URIStorage, ERC721Pausable, Ownable {
     uint256 private _nextTokenId;
 
+    
+
     constructor(address initialOwner)
         ERC721("AxICToken", "AxI")
         Ownable(initialOwner)

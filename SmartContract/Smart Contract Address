@@ -1,2 +1,5 @@
 AxICToken address = "0xA0d5aCae47Cf9991062cBc5820d578ae5d52CD6C"
 Marketplace address = "0xa4De5C749A7dC0Bc2EE0C9C71Cc469CA9FAEd4eF"
+
+
+Get abi of smart contract: build/contracts => <name smart contract>.json => find "abi:"

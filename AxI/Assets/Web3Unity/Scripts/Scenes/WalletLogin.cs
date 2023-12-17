@@ -25,8 +25,6 @@ public class WalletLogin: MonoBehaviour
     public GameObject loading;
     public GameObject loadingVideo;
     public GameObject loginError;
-
-    public GameObject DBManager;
     void Start() {
         projectConfigSO = (ProjectConfigScriptableObject)Resources.Load("ProjectConfigData", typeof(ScriptableObject));
         PlayerPrefs.SetString("ProjectID", projectConfigSO.ProjectId);
@@ -60,6 +58,8 @@ public class WalletLogin: MonoBehaviour
         string message = expirationTime.ToString();
         // sign message
         string signature = "";
+
+        Player user = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>(); 
         try
         {
             signature = await Web3Wallet.Sign(message);
@@ -73,12 +73,11 @@ public class WalletLogin: MonoBehaviour
                 PlayerPrefs.SetString("Account", account);
                 if (rememberMe.isOn) PlayerPrefs.SetInt("RememberMe", 1);
                 else PlayerPrefs.SetInt("RememberMe", 0);
-                DBManager.SetActive(true);
-                DontDestroyOnLoad(DBManager);
-                print("Account: " + account);
+                user.setAccount(account);
+                DontDestroyOnLoad(user);
+                checkDataInSmartContract();
 
-                // upload user data
-                DBManager.GetComponent<DatabaseManager>().CheckData();
+                await Task.Delay(10000);
                 LoadHome();
             }
         }
@@ -89,6 +88,12 @@ public class WalletLogin: MonoBehaviour
             await Task.Delay(3000);
             loginError.SetActive(false);
         }
+    }
+
+    public void checkDataInSmartContract()
+    {
+        string[] args = {account};
+        ContractManager.CInstance.GetUserAxieFromSmartContract(args);
     }
 
     public async void LoadHome()
@@ -112,6 +117,5 @@ public class WalletLogin: MonoBehaviour
         
         await Task.Delay(5000);
         scene.allowSceneActivation = true;
-
     }
 }

@@ -87,7 +87,7 @@ contract Marketplace {
         return((items[_tokenId].price*(100 + tax))/100);
     }
 
-    // Get information of item have token ID: _tokenId
+    // Get information of item have token ID: _tokenId   - Next to change - 18/12/2023
     function getItems(uint256 _tokenId)external view returns (Item memory){
         return items[_tokenId];
     }

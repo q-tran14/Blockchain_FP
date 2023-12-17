@@ -58,7 +58,7 @@ public class EVM
         form.AddField("abi", _abi);
         form.AddField("method", _method);
         form.AddField("args", _args);
-        form.AddField("rpc", _rpc);
+        form.AddField("rpc", PlayerPrefs.GetString("RPC"));
         string url = host + "/call";
         using (UnityWebRequest webRequest = UnityWebRequest.Post(url, form))
         {
