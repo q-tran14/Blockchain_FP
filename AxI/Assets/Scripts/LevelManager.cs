@@ -29,7 +29,7 @@
         public static LevelManager LInstance { get; private set; }
         public int axieSelect;
         public Vector2 spawnPos;
-        public bool flag = true;
+        public bool flag;
 
         [SerializeField] public List<Axie> axies;
         Axie2dBuilder builder => Mixer.Builder;
@@ -114,9 +114,7 @@
             {
                 RectTransform rootTFforGift = GameObject.Find("Axie").GetComponent<RectTransform>();
                 var skeletonGraphic = SkeletonGraphic.NewSkeletonGraphicGameObject(builderResult.skeletonDataAsset, rootTFforGift, builderResult.sharedGraphicMaterial);
-                skeletonGraphic.rectTransform.sizeDelta = new Vector2(0.34f, 1);
-                skeletonGraphic.rectTransform.localScale = new Vector3(0.36f, 1.2f, 1);
-                skeletonGraphic.rectTransform.anchoredPosition = new Vector2(-1f, 52f);
+                skeletonGraphic.rectTransform.localScale = new Vector3(0.5f, 0.5f, 1);
                 skeletonGraphic.gameObject.tag = "Gift";
                 skeletonGraphic.Initialize(true);
                 skeletonGraphic.Skeleton.SetSkin("default");

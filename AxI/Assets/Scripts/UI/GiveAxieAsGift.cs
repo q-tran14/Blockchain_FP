@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public class GiveAxieAsGift : MonoBehaviour
 {
     [SerializeField] private int axieId;
     public Text axieIdTxt;
+    public GameObject flag;
     // Start is called before the first frame update
     private void OnEnable()
     {
@@ -15,7 +17,7 @@ public class GiveAxieAsGift : MonoBehaviour
         {
             axieId = Random.Range(5, 150);
             StartCoroutine(LevelManager.LInstance.GetAxiesGenes(axieId.ToString(),false,true, LevelManager.LInstance.axies.Count));
-        } while (LevelManager.LInstance.flag);
+        } while (LevelManager.LInstance.flag == false);
 
         axieIdTxt.text = "#" + axieId.ToString();
     }
@@ -25,22 +27,17 @@ public class GiveAxieAsGift : MonoBehaviour
         var skeletonGraphics = FindObjectsOfType<SkeletonGraphic>();
         foreach (var p in skeletonGraphics)
         {
-            if (p.transform.gameObject.tag == "Gift"){
-                Destroy(p.transform.gameObject);
-            }
-            
+            if (p.transform.gameObject.tag == "Gift") Destroy(p.transform.gameObject);
+
         }
     }
 
-    public void ClaimAxie()
+    public async void ClaimAxie()
     {
-        ScreenshotHandler.SInstance.TakeScreenShot(axieId.ToString());
-        ScreenshotHandler.SInstance.UploadNFTToNFTStorage();
-        if(ScreenshotHandler.SInstance.cid != "" || ScreenshotHandler.SInstance.cid != null)
-        {
-            ScreenshotHandler.SInstance.GenerateMetadataJson(axieId.ToString());
-            ScreenshotHandler.SInstance.UploadMetadataToNFTStorage();
-        }
+        ScreenshotHandler.SInstance.objScreenShot = flag;
+        ScreenshotHandler.SInstance.axieID = axieId.ToString();
+        StartCoroutine(ScreenshotHandler.SInstance.ScreenShot());
+
         string uri = "https://ipfs.io/ipfs/" + ScreenshotHandler.SInstance.cid;
         
         //string[] args = { PlayerPrefs.GetString("Account"), uri };

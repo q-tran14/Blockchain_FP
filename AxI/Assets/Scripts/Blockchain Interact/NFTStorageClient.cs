@@ -216,6 +216,7 @@ namespace NFTStorage
 
         IEnumerator PostRequest(string url, string filePath)
         {
+            Debug.Log(filePath);
             byte[] dataToPost = System.IO.File.ReadAllBytes(filePath);
             UploadHandlerRaw uhr = new UploadHandlerRaw(dataToPost);
 
@@ -236,6 +237,7 @@ namespace NFTStorage
                 NFTStorageUploadResponse res = JsonUtility.FromJson<NFTStorageUploadResponse>(uwr.downloadHandler.text);
                 ScreenshotHandler.SInstance.cid = res.value.cid;
                 Debug.Log("CID: " + res.value.cid);
+                ScreenshotHandler.SInstance.finished = true;
             }
         }
 
@@ -359,6 +361,7 @@ namespace NFTStorage
         {
             string requestUri = nftStorageApiUrl + "/upload";
             uwr = null;
+            Debug.Log(path);
             StartCoroutine(PostRequest(requestUri, path));
             StartCoroutine(UploadProgressCoroutine());
         }

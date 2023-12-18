@@ -75,9 +75,9 @@ public class WalletLogin: MonoBehaviour
                 else PlayerPrefs.SetInt("RememberMe", 0);
                 user.setAccount(account);
                 DontDestroyOnLoad(user);
-                checkDataInSmartContract();
+                //checkDataInSmartContract();
 
-                await Task.Delay(10000);
+                await Task.Delay(5000);
                 LoadHome();
             }
         }
@@ -110,10 +110,9 @@ public class WalletLogin: MonoBehaviour
         // Enable loading Object
         loadingVideo.SetActive(true);
         loading.SetActive(true);
-
+        checkDataInSmartContract();
         // Disable background
-        SceneLoader.SInstance.setImage(background.GetComponent<Image>());
-        SceneLoader.SInstance.Run();
+        SceneLoader.SInstance.Run(background.GetComponent<Image>());
         
         await Task.Delay(5000);
         scene.allowSceneActivation = true;

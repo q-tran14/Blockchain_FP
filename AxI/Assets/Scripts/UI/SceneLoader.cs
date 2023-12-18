@@ -11,8 +11,6 @@ public class SceneLoader : MonoBehaviour
     public static SceneLoader SInstance { get; private set; }
     public float duration = 6f;
 
-    public Image i;
-
     private void Awake()
     {
         if (SInstance != null && SInstance != this) Destroy(this);
@@ -21,12 +19,12 @@ public class SceneLoader : MonoBehaviour
             DontDestroyOnLoad(this);
         }
     }
-    public void Run()
+    public void Run(Image i)
     {
         StartCoroutine("_FadingOut",i);
 
     }
-    public IEnumerator _FadingOut()
+    public IEnumerator _FadingOut(Image i)
     {
         Color from = Color.white;
         Color to = new Color(1,1,1,0);
@@ -37,10 +35,5 @@ public class SceneLoader : MonoBehaviour
             t += Time.deltaTime;
             yield return null;
         }
-    }
-
-    public void setImage(Image im)
-    {
-        i = im;
     }
 }

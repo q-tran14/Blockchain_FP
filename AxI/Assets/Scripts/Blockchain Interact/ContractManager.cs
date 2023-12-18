@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class ContractManager : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class ContractManager : MonoBehaviour
         if (CInstance != null && CInstance != this) Destroy(this);
         else
         {
-            //player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
             CInstance = this;
             DontDestroyOnLoad(this);
         }
@@ -52,6 +53,7 @@ public class ContractManager : MonoBehaviour
         {
             string[] tokenID = JsonUtility.FromJson<string[]>(response);
             List<string> tokenURIs = new List<string>();
+
             foreach (string token in tokenID)
             {
                 string res = await EVM.Call(PlayerPrefs.GetString("ChainID"), PlayerPrefs.GetString("Network"), contract.address, contract.abi, "tokenURI", obj);
@@ -61,11 +63,13 @@ public class ContractManager : MonoBehaviour
             foreach (string uri in tokenURIs)
             {
                 // Do Something with NFT.Storage Client to get metadata.json => get axieID (name)
+                UnityWebRequest wr = UnityWebRequest.Get(uri);
+                await wr.SendWebRequest();
+                
+                Metadata metadata = JsonUtility.FromJson<Metadata>(System.Text.Encoding.UTF8.GetString(wr.downloadHandler.data));
+
+                player.axieIDs.Add(metadata.name);
             }
-        }
-        else
-        {
-            // New player
         }
     }
 }
