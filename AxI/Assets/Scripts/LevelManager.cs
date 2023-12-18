@@ -26,16 +26,12 @@
     }
     public class LevelManager : MonoBehaviour
     {
-        [SerializeField]
-        
         public static LevelManager LInstance { get; private set; }
         public int axieSelect;
         public Vector2 spawnPos;
         public bool flag = true;
 
         [SerializeField] public List<Axie> axies;
-
-        [SerializeField] public RectTransform rootTF;
         Axie2dBuilder builder => Mixer.Builder;
         bool isFetchingGenes = false;
 
@@ -63,32 +59,34 @@
         //    yield return new WaitForEndOfFrame();
         //}
 
-            void ProcessMixer(string axieId, string genesStr, bool isGraphic, int order)   //Lụm
+            void ProcessMixer(string axieId, string genesStr, bool isGraphic, bool giftUse, int order)   //Lụm
             {
                 if (string.IsNullOrEmpty(genesStr))
                 {
                     Debug.LogError($"[{axieId}] genes not found!!!");
                     flag = false;
-                    return;
-                }
-                float scale = 0.007f;
-
-                var meta = new Dictionary<string, string>();
-                //foreach (var accessorySlot in ACCESSORY_SLOTS)
-                //{
-                //    meta.Add(accessorySlot, $"{accessorySlot}1{System.Char.ConvertFromUtf32((int)('a') + accessoryIdx - 1)}");
-                //}
-                var builderResult = builder.BuildSpineFromGene(axieId, genesStr, meta, scale, isGraphic);
-
-                //Test
-                if (isGraphic)
-                {
-                    SpawnSkeletonGraphic(builderResult,axieId, order);
                 }
                 else
                 {
-                    SpawnSkeletonAnimation(builderResult);
+                    flag = true;
+                    float scale = 0.007f;
+
+                    var meta = new Dictionary<string, string>();
+                    //foreach (var accessorySlot in ACCESSORY_SLOTS)
+                    //{
+                    //    meta.Add(accessorySlot, $"{accessorySlot}1{System.Char.ConvertFromUtf32((int)('a') + accessoryIdx - 1)}");
+                    //}
+                    var builderResult = builder.BuildSpineFromGene(axieId, genesStr, meta, scale, isGraphic);
+
+                    //Test
+                    if (giftUse) SpawnSkeletonGraphicForGift(builderResult, axieId, order);
+                    else
+                    {
+                        if (isGraphic) SpawnSkeletonGraphic(builderResult, axieId, order);
+                        else SpawnSkeletonAnimation(builderResult);
+                    }
                 }
+                
             }
 
             void SpawnSkeletonAnimation(Axie2dBuilderResult builderResult)
@@ -112,10 +110,33 @@
                 }
                 runtimeSkeletonAnimation.skeleton.FindSlot("shadow").Attachment = null;
             }
+            void SpawnSkeletonGraphicForGift(Axie2dBuilderResult builderResult, string axieId, int order)        // Load Axie for Gift
+            {
+                RectTransform rootTFforGift = GameObject.Find("Axie").GetComponent<RectTransform>();
+                var skeletonGraphic = SkeletonGraphic.NewSkeletonGraphicGameObject(builderResult.skeletonDataAsset, rootTFforGift, builderResult.sharedGraphicMaterial);
+                skeletonGraphic.rectTransform.sizeDelta = new Vector2(0.34f, 1);
+                skeletonGraphic.rectTransform.localScale = new Vector3(0.36f, 1.2f, 1);
+                skeletonGraphic.rectTransform.anchoredPosition = new Vector2(-1f, 52f);
+                skeletonGraphic.gameObject.tag = "Gift";
+                skeletonGraphic.Initialize(true);
+                skeletonGraphic.Skeleton.SetSkin("default");
+                skeletonGraphic.Skeleton.SetSlotsToSetupPose();
 
-            void SpawnSkeletonGraphic(Axie2dBuilderResult builderResult, string axieId, int order)        //Lụm
-            {   
-                var skeletonGraphic = SkeletonGraphic.NewSkeletonGraphicGameObject(builderResult.skeletonDataAsset, rootTF, builderResult.sharedGraphicMaterial);
+                skeletonGraphic.gameObject.AddComponent<AutoBlendAnimGraphicController>();
+                skeletonGraphic.AnimationState.SetAnimation(0, "action/idle/normal", true);
+
+                if (builderResult.adultCombo.ContainsKey("body") &&
+                builderResult.adultCombo["body"].Contains("mystic") &&
+                builderResult.adultCombo.TryGetValue("body-class", out var bodyClass) &&
+                builderResult.adultCombo.TryGetValue("body-id", out var bodyId))
+                {
+                    skeletonGraphic.gameObject.AddComponent<MysticIdGraphicController>().Init(bodyClass, bodyId);
+                }
+            }
+            void SpawnSkeletonGraphic(Axie2dBuilderResult builderResult, string axieId, int order)        // Load Axie for Home
+            {
+                RectTransform rootTFforHome = GameObject.Find("ListAxie").GetComponent<RectTransform>();
+                var skeletonGraphic = SkeletonGraphic.NewSkeletonGraphicGameObject(builderResult.skeletonDataAsset, rootTFforHome, builderResult.sharedGraphicMaterial);
                 skeletonGraphic.rectTransform.sizeDelta = new Vector2(1, 1);
                 skeletonGraphic.rectTransform.localScale = new Vector3(0.33f,0.33f,0.1f);
                 skeletonGraphic.rectTransform.anchoredPosition = new Vector2(1f, -1.5f);
@@ -139,7 +160,7 @@
                 if (axies.Count > 1) skeletonGraphic.gameObject.SetActive(false);
             }
 
-            public IEnumerator GetAxiesGenes(string axieId, bool UIUse, int order)     // Lụm
+            public IEnumerator GetAxiesGenes(string axieId, bool UIUse, bool giftUse, int order)     // Lụm
             {
                 isFetchingGenes = true;
                 
@@ -162,7 +183,7 @@
                     {
                         JObject jResult = JObject.Parse(result);
                         string genesStr = (string)jResult["data"]["axie"]["newGenes"];
-                        ProcessMixer(axieId, genesStr, UIUse, order);
+                        ProcessMixer(axieId, genesStr, UIUse, giftUse, order);
                     }
                 }
                 isFetchingGenes = false;

@@ -234,7 +234,8 @@ namespace NFTStorage
             {
                 Debug.Log("Received: " + uwr.downloadHandler.text);
                 NFTStorageUploadResponse res = JsonUtility.FromJson<NFTStorageUploadResponse>(uwr.downloadHandler.text);
-
+                ScreenshotHandler.SInstance.cid = res.value.cid;
+                Debug.Log("CID: " + res.value.cid);
             }
         }
 

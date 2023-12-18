@@ -16,7 +16,7 @@ public class ContractManager : MonoBehaviour
         if (CInstance != null && CInstance != this) Destroy(this);
         else
         {
-            player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+            //player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
             CInstance = this;
             DontDestroyOnLoad(this);
         }

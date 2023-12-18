@@ -18,7 +18,6 @@ public class UIController : MonoBehaviour
     public Player player;
     public Text addressPlayer;
     public Text axieNum;
-    public GameObject listAxies;
     public Button nextButton;
     public Button prevButton;
     public int currentAxiesIndex = 0;
@@ -26,8 +25,8 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        addressPlayer.text = player.getPlayerAccout().Substring(0, 7)+ "..." + player.getPlayerAccout().Substring(player.getPlayerAccout().Length - 5, 5);
+        //player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        //addressPlayer.text = player.getPlayerAccout().Substring(0, 7)+ "..." + player.getPlayerAccout().Substring(player.getPlayerAccout().Length - 5, 5);
         // UpdateUI();
         loadList();
     }
@@ -56,7 +55,7 @@ public class UIController : MonoBehaviour
 
     private IEnumerator LoadAxiesSequentially(List<int> axies) {
         for (int i = 0; i < axies.Count; i++) {
-            yield return StartCoroutine(LevelManager.LInstance.GetAxiesGenes(axies[i].ToString(), true, i));
+            yield return StartCoroutine(LevelManager.LInstance.GetAxiesGenes(axies[i].ToString(), true, false, i));
             currentAxiesIndex = i;
         }
         currentAxiesIndex = 0;
@@ -76,6 +75,7 @@ public class UIController : MonoBehaviour
             currentAxiesIndex++;
             LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(true);
         }
+        LevelManager.LInstance.axieSelect = currentAxiesIndex;
     }
 
     public void PrevAxie() {
@@ -92,6 +92,7 @@ public class UIController : MonoBehaviour
             currentAxiesIndex--;
             LevelManager.LInstance.axies[currentAxiesIndex].axie.SetActive(true);
         }
+        LevelManager.LInstance.axieSelect = currentAxiesIndex;
     } 
 
     public void BattleGame() {
@@ -106,11 +107,6 @@ public class UIController : MonoBehaviour
     
     public void Gift()
     {
-        int id;
-        do
-        {
-            id = Random.Range(5, 11932553);
-            StartCoroutine(LevelManager.LInstance.GetAxiesGenes(id.ToString(), true, LevelManager.LInstance.axies.Count));
-        } while (LevelManager.LInstance.flag);
+        
     }
 }
