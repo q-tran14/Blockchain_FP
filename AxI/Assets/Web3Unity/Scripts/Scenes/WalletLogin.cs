@@ -3,7 +3,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -32,7 +34,6 @@ public class WalletLogin: MonoBehaviour
         PlayerPrefs.SetString("Chain", projectConfigSO.Chain);
         PlayerPrefs.SetString("Network", projectConfigSO.Network);
         PlayerPrefs.SetString("RPC", projectConfigSO.Rpc);
-
         
         // if remember me is checked, set the account to the saved account
         #if !UNITY_EDITOR
@@ -75,7 +76,7 @@ public class WalletLogin: MonoBehaviour
                 else PlayerPrefs.SetInt("RememberMe", 0);
                 user.setAccount(account);
                 DontDestroyOnLoad(user);
-                //checkDataInSmartContract();
+                checkDataInSmartContract();
 
                 await Task.Delay(5000);
                 LoadHome();
@@ -110,11 +111,19 @@ public class WalletLogin: MonoBehaviour
         // Enable loading Object
         loadingVideo.SetActive(true);
         loading.SetActive(true);
-        checkDataInSmartContract();
         // Disable background
         SceneLoader.SInstance.Run(background.GetComponent<Image>());
         
         await Task.Delay(5000);
         scene.allowSceneActivation = true;
+    }
+
+    public void Exit()
+    {
+        #if !UNITY_EDITOR
+            Application.Quit();
+        #else
+            EditorApplication.ExitPlaymode();
+        #endif
     }
 }

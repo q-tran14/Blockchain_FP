@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 430838055}
   - component: {fileID: 430838054}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: EarnTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -965,7 +965,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   axieSelect: 0
-  spawnPos: {x: 0, y: 0}
+  spawnPos: {x: -10, y: -1}
   flag: 1
   axies: []
 --- !u!4 &681519981
@@ -1509,6 +1509,8 @@ MonoBehaviour:
   axieId: 0
   axieIdTxt: {fileID: 1640273315}
   flag: {fileID: 551495436}
+  uploaded: 0
+  earnTxt: {fileID: 430838054}
 --- !u!1 &1261997053
 GameObject:
   m_ObjectHideFlags: 0
@@ -2222,19 +2224,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1622171744}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2084358707}
-        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: BattleGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1622171744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2434,19 +2424,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1774263815}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2084358707}
-        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: ExitGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1774263815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2749,6 +2727,7 @@ MonoBehaviour:
   axieNum: {fileID: 1542893141}
   nextButton: {fileID: 1305079367}
   prevButton: {fileID: 748288200}
+  exitButton: {fileID: 1774263814}
   claim: {fileID: 1247120025}
   notice: {fileID: 492827527}
   currentAxiesIndex: 0

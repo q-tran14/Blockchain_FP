@@ -12,6 +12,12 @@ using Jint.Native.Number;
 using Unity.VisualScripting;
 using System;
 using Random = UnityEngine.Random;
+using UnityEngine.Windows;
+using System.IO;
+using Directory = System.IO.Directory;
+using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
+using UnityEditor;
 
 public class UIController : MonoBehaviour
 {
@@ -20,17 +26,19 @@ public class UIController : MonoBehaviour
     public Text axieNum;
     public Button nextButton;
     public Button prevButton;
+    public Button exitButton;
     public GameObject claim;
     public GameObject notice;
     public int currentAxiesIndex = 0;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         addressPlayer.text = player.getPlayerAccout().Substring(0, 7)+ "..." + player.getPlayerAccout().Substring(player.getPlayerAccout().Length - 5, 5);
         UpdateUI();
-        if (player.axieIDs.Count == 0) notice.SetActive(true);
+        if (player.getTotalAxies() == 0) notice.SetActive(true);
+        else loadList(player.getListAxies());
     }
 
 
@@ -43,6 +51,12 @@ public class UIController : MonoBehaviour
         StartCoroutine(LoadAxiesSequentially(l));
         nextButton.onClick.AddListener(NextAxie);
         prevButton.onClick.AddListener(PrevAxie);
+        exitButton.onClick.AddListener(ExitGame);
+    }
+
+    public void updateList(string axieId)
+    {
+        StartCoroutine(updateListAxie(axieId));
     }
 
     private IEnumerator LoadAxiesSequentially(List<string> axies) {
@@ -52,7 +66,11 @@ public class UIController : MonoBehaviour
         }
         currentAxiesIndex = 0;
     }
-
+    private IEnumerator updateListAxie(string axieId)
+    {
+        player.addAxie(axieId);
+        yield return StartCoroutine(LevelManager.LInstance.GetAxiesGenes(axieId.ToString(), true, false, LevelManager.LInstance.axies.Count));
+    }
     public void NextAxie() {
         if (currentAxiesIndex == LevelManager.LInstance.axies.Count - 1)
         {
@@ -87,14 +105,32 @@ public class UIController : MonoBehaviour
         LevelManager.LInstance.axieSelect = currentAxiesIndex;
     } 
 
-    public void BattleGame() {
+    public async void BattleGame() {
+        // load next scene
+        var scene = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
+        scene.allowSceneActivation = false;
 
-        //change screen
+        await Task.Delay(1000);
+
     }
 
     public void ExitGame() {
-        // Update data to DB        
-        Application.Quit();
+        
+        string[] files = Directory.GetFiles(Application.persistentDataPath);
+        if (files.Length != 0)
+        {
+            foreach (var f in Directory.GetFiles(Application.persistentDataPath))
+            {
+                FileInfo i = new FileInfo(f);
+                i.Delete();
+            }
+        }
+        Debug.Log("Exit");
+        #if !UNITY_EDITOR
+            Application.Quit();
+        #else
+            EditorApplication.ExitPlaymode();
+        #endif
     }
     
     public void Gift()

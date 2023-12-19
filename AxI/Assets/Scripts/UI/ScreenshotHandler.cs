@@ -58,6 +58,9 @@ public class ScreenshotHandler : MonoBehaviour
         yield return new WaitUntil(() => finished == true);
         GenerateMetadataJson();
         UploadMetadataToNFTStorage();
+
+        yield return new WaitUntil(() => finished == true);
+        GameObject.Find("Claim").GetComponent<GiveAxieAsGift>().uploaded = true;
     }
     public void UploadNFTToNFTStorage()
     {
@@ -85,7 +88,7 @@ public class ScreenshotHandler : MonoBehaviour
         Debug.Log("Up Metadata");
         if (metadataPath != null || metadataPath != "" && finished == true)
         {
-
+            finished = false;
             nftStorage.UploadDataFromStringUnityWebrequest(metadataPath);
         }
     }

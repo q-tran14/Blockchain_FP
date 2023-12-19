@@ -10,12 +10,14 @@ public class GiveAxieAsGift : MonoBehaviour
     [SerializeField] private int axieId;
     public Text axieIdTxt;
     public GameObject flag;
+    public bool uploaded;
+    public Text earnTxt;
     // Start is called before the first frame update
     private void OnEnable()
     {
         do
         {
-            axieId = Random.Range(5, 150);
+            axieId = Random.Range(5, 11935533);
             StartCoroutine(LevelManager.LInstance.GetAxiesGenes(axieId.ToString(),false,true, LevelManager.LInstance.axies.Count));
         } while (LevelManager.LInstance.flag == false);
 
@@ -24,6 +26,7 @@ public class GiveAxieAsGift : MonoBehaviour
 
     private void OnDisable()
     {
+        earnTxt.text = "Earn";
         var skeletonGraphics = FindObjectsOfType<SkeletonGraphic>();
         foreach (var p in skeletonGraphics)
         {
@@ -34,13 +37,23 @@ public class GiveAxieAsGift : MonoBehaviour
 
     public async void ClaimAxie()
     {
+        earnTxt.text = "Earning";
         ScreenshotHandler.SInstance.objScreenShot = flag;
         ScreenshotHandler.SInstance.axieID = axieId.ToString();
         StartCoroutine(ScreenshotHandler.SInstance.ScreenShot());
 
+        while (uploaded != true)
+        {
+            await Task.Delay(1);
+        }
+
         string uri = "https://ipfs.io/ipfs/" + ScreenshotHandler.SInstance.cid;
-        
-        //string[] args = { PlayerPrefs.GetString("Account"), uri };
-        //ContractManager.CInstance.SendTransaction("safeMint", args);
+
+
+        string[] args = { PlayerPrefs.GetString("Account"), uri };
+        string response = await ContractManager.CInstance.SendTransaction("safeMint", args);
+        Debug.Log(response);
+        GameObject.Find("UIController").GetComponent<UIController>().updateList(axieId.ToString());
+        gameObject.SetActive(false);
     }
 }

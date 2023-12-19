@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -23,19 +24,21 @@ public class ContractManager : MonoBehaviour
         }
     }
 
-    async public void SendTransaction(string method, string[] args) // Mint
+    async public Task<string> SendTransaction(string method, string[] args) // Mint
     {
         string obj = JsonConvert.SerializeObject(args);
         string data = await EVM.CreateContractData(contract.abi, method, obj);
+        string response = "";
         try
         {
-            string response = await Web3Wallet.SendTransaction(PlayerPrefs.GetString("ChainID"), contract.address, "0", data, "", "");
+            response = await Web3Wallet.SendTransaction(PlayerPrefs.GetString("ChainID"), contract.address, "0", data, "", "");
             Debug.Log(response);
         }
         catch (Exception e)
         {
             Debug.LogException(e);
         }
+        return response;
     }
 
     async public void ReadValueFromSmartContract(string method, string[] args)  // Get all token
@@ -51,12 +54,14 @@ public class ContractManager : MonoBehaviour
         Debug.Log(response);
         if (!response.Equals("[]")) // Load Axie ID to Player.AxieIDs - Old player
         {
-            string[] tokenID = JsonUtility.FromJson<string[]>(response);
+            List<string> tokenIDs = JsonConvert.DeserializeObject<List<string>>(response);
+            Debug.Log(tokenIDs[0]);
             List<string> tokenURIs = new List<string>();
 
-            foreach (string token in tokenID)
+            foreach (string token in tokenIDs)
             {
-                string res = await EVM.Call(PlayerPrefs.GetString("ChainID"), PlayerPrefs.GetString("Network"), contract.address, contract.abi, "tokenURI", obj);
+                string res = await EVM.Call(PlayerPrefs.GetString("ChainID"), PlayerPrefs.GetString("Network"), contract.address, contract.abi, "tokenURI", $"[\"{token}\"]");
+                Debug.Log(res);
                 tokenURIs.Add(res);
             }
 
@@ -65,10 +70,10 @@ public class ContractManager : MonoBehaviour
                 // Do Something with NFT.Storage Client to get metadata.json => get axieID (name)
                 UnityWebRequest wr = UnityWebRequest.Get(uri);
                 await wr.SendWebRequest();
-                
+
                 Metadata metadata = JsonUtility.FromJson<Metadata>(System.Text.Encoding.UTF8.GetString(wr.downloadHandler.data));
 
-                player.axieIDs.Add(metadata.name);
+                player.addAxie(metadata.name);
             }
         }
     }

@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] public string account;
-    [SerializeField] public List<string> axieIDs;
+    [SerializeField] private string account;
+    [SerializeField] private List<string> axieIDs;
     
     
     public void setAccount(string acc)
@@ -19,12 +19,10 @@ public class Player : MonoBehaviour
         axieIDs.Add(Id);
         Debug.Log($"Added {Id}");
     }
-
-    public void setAxieIDs(List<string> IDs)
+    public List<string> getListAxies()
     {
-        axieIDs = IDs;
+        return axieIDs;
     }
-
     public string getPlayerAccout() {
         return account;
     }
