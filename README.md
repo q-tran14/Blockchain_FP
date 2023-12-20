@@ -2,7 +2,7 @@
 ## How to run the project
 ### Game
  - Install [Unity Hub](https://unity.com/download)
- - Install [Unity Editor 2022.3.11f1](https://unity.com/releases/editor/archive)
+ - Install [Unity Editor 2022.3.11f1]([https://unity.com/releases/editor/archive](https://unity.com/releases/editor/whats-new/2022.3.11#release-notes))
 
 ### Smart Contract
 - Run terminal or git bash and install truffle
