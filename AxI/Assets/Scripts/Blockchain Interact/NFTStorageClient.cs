@@ -119,6 +119,7 @@ namespace NFTStorage
     // This is the main class for communicating with nft.storage and IPFS
     public class NFTStorageClient : MonoBehaviour
     {
+        public static NFTStorage.NFTStorageClient NFTInstance { get; private set; }
         // nft.storage API endpoint
         private static readonly string nftStorageApiUrl = "https://api.nft.storage/";
 
@@ -134,6 +135,18 @@ namespace NFTStorage
         /**
         <summary>"Start" is called before the first frame update for initializing "NFTStorageClient"</summary>
         */
+        private void Awake()
+        {
+            if (NFTInstance != null && NFTInstance != this)
+            {
+                DestroyImmediate(gameObject);
+            }
+            else
+            {
+                NFTInstance = this;
+                DontDestroyOnLoad(this);
+            }
+        }
         void Start()
         {
             nftClient.DefaultRequestHeaders.Add("Accept", "application/json");

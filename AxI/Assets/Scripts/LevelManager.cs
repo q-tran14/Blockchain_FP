@@ -10,95 +10,74 @@
     using Spine.Unity;
     using UnityEngine.Networking;
     using Unity.VisualScripting;
-    [System.Serializable]
-    public class Axie
-    {
-        public int order;
-        public string id;
-        public GameObject axie;
-        public Axie(int or, string axieID, GameObject axieOj)
-        {
-            order = or;
-            id = axieID;
-            axie = axieOj;
-        }
-        public override string ToString() => $"{order}+{id}+{axie.name}";
-    }
+    
     public class LevelManager : MonoBehaviour
     {
+        public bool Won;
         public static LevelManager LInstance { get; private set; }
-        public int axieSelect;
+        public string axieSelect;
         public Vector2 spawnPos;
         public bool flag;
-
-        [SerializeField] public List<Axie> axies;
         Axie2dBuilder builder => Mixer.Builder;
+        public UIController ui;
         bool isFetchingGenes = false;
 
         private void Awake()
-        {  
-            if (LInstance != null && LInstance != this) Destroy(this);
-            else {
+        {
+            if (LInstance != null && LInstance != this)
+            {
+                DestroyImmediate(gameObject);
+            }
+            else
+            {
                 LInstance = this;
                 Mixer.Init();
                 DontDestroyOnLoad(this);
             }
         }
 
-        //private IEnumerator LoadScene()
-        //{
-        //    var scene = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
-        //    while (scene.progress < 0.9f)
-        //    {
-        //        if (SceneManager.GetActiveScene().buildIndex == 0)
-        //        {
-
-        //        }
-        //    }
-        //    yield return new WaitForSeconds(2.5f);
-        //    yield return new WaitForEndOfFrame();
-        //}
-
-            void ProcessMixer(string axieId, string genesStr, bool isGraphic, bool giftUse, int order)   //Lụm
+        void ProcessMixer(string axieId, string genesStr, bool isGraphic, bool giftUse, int order)   //Lụm
+        {
+            if (string.IsNullOrEmpty(genesStr))
             {
-                if (string.IsNullOrEmpty(genesStr))
-                {
-                    Debug.LogError($"[{axieId}] genes not found!!!");
-                    flag = false;
-                }
+                Debug.LogError($"[{axieId}] genes not found!!!");
+                flag = false;
+            }
+            else
+            {
+                flag = true;
+                float scale = 0.007f;
+                ui = GameObject.Find("UIController").GetComponent<UIController>();
+                var meta = new Dictionary<string, string>();
+                        //foreach (var accessorySlot in ACCESSORY_SLOTS)
+                        //{
+                        //    meta.Add(accessorySlot, $"{accessorySlot}1{System.Char.ConvertFromUtf32((int)('a') + accessoryIdx - 1)}");
+                        //}
+                var builderResult = builder.BuildSpineFromGene(axieId, genesStr, meta, scale, isGraphic);
+
+                        //Test
+                if (giftUse) SpawnSkeletonGraphicForGift(builderResult, axieId, order);
                 else
                 {
-                    flag = true;
-                    float scale = 0.007f;
-
-                    var meta = new Dictionary<string, string>();
-                    //foreach (var accessorySlot in ACCESSORY_SLOTS)
-                    //{
-                    //    meta.Add(accessorySlot, $"{accessorySlot}1{System.Char.ConvertFromUtf32((int)('a') + accessoryIdx - 1)}");
-                    //}
-                    var builderResult = builder.BuildSpineFromGene(axieId, genesStr, meta, scale, isGraphic);
-
-                    //Test
-                    if (giftUse) SpawnSkeletonGraphicForGift(builderResult, axieId, order);
-                    else
-                    {
-                        if (isGraphic) SpawnSkeletonGraphic(builderResult, axieId, order);
-                        else SpawnSkeletonAnimation(builderResult);
-                    }
+                    if (isGraphic) SpawnSkeletonGraphic(builderResult, axieId, order);
+                    else SpawnSkeletonAnimation(builderResult);
                 }
-                
             }
+                
+        }
 
-            void SpawnSkeletonAnimation(Axie2dBuilderResult builderResult)
+        void SpawnSkeletonAnimation(Axie2dBuilderResult builderResult)
             {
                 GameObject go = new GameObject("DemoAxie");
-                go.transform.localPosition = new Vector3(0f, -2.4f, 0f);
+                go.transform.localPosition = new Vector3(spawnPos.x, spawnPos.y, 0f);
                 SkeletonAnimation runtimeSkeletonAnimation = SkeletonAnimation.NewSkeletonAnimationGameObject(builderResult.skeletonDataAsset);
-                runtimeSkeletonAnimation.gameObject.layer = LayerMask.NameToLayer("Player");
+                //runtimeSkeletonAnimation.gameObject.layer = LayerMask.NameToLayer("Player");
+                runtimeSkeletonAnimation.gameObject.tag = "Player";
                 runtimeSkeletonAnimation.transform.SetParent(go.transform, false);
-                runtimeSkeletonAnimation.transform.localScale = Vector3.one;
+                runtimeSkeletonAnimation.transform.localScale = new Vector3(-0.5f,0.5f,1);
 
                 runtimeSkeletonAnimation.gameObject.AddComponent<AutoBlendAnimController>();
+                runtimeSkeletonAnimation.gameObject.AddComponent<AxieController>();
                 runtimeSkeletonAnimation.state.SetAnimation(0, "action/idle/normal", true);
 
                 if (builderResult.adultCombo.ContainsKey("body") &&
@@ -110,7 +89,7 @@
                 }
                 runtimeSkeletonAnimation.skeleton.FindSlot("shadow").Attachment = null;
             }
-            void SpawnSkeletonGraphicForGift(Axie2dBuilderResult builderResult, string axieId, int order)        // Load Axie for Gift
+        void SpawnSkeletonGraphicForGift(Axie2dBuilderResult builderResult, string axieId, int order)        // Load Axie for Gift
             {
                 RectTransform rootTFforGift = GameObject.Find("Axie").GetComponent<RectTransform>();
                 var skeletonGraphic = SkeletonGraphic.NewSkeletonGraphicGameObject(builderResult.skeletonDataAsset, rootTFforGift, builderResult.sharedGraphicMaterial);
@@ -131,7 +110,7 @@
                     skeletonGraphic.gameObject.AddComponent<MysticIdGraphicController>().Init(bodyClass, bodyId);
                 }
             }
-            void SpawnSkeletonGraphic(Axie2dBuilderResult builderResult, string axieId, int order)        // Load Axie for Home
+        void SpawnSkeletonGraphic(Axie2dBuilderResult builderResult, string axieId, int order)        // Load Axie for Home
             {
                 RectTransform rootTFforHome = GameObject.Find("ListAxie").GetComponent<RectTransform>();
                 var skeletonGraphic = SkeletonGraphic.NewSkeletonGraphicGameObject(builderResult.skeletonDataAsset, rootTFforHome, builderResult.sharedGraphicMaterial);
@@ -154,11 +133,11 @@
                 }
 
                 Axie a = new Axie(order, axieId, skeletonGraphic.gameObject);
-                axies.Add(a);
-                if (axies.Count > 1) skeletonGraphic.gameObject.SetActive(false);
+                ui.axies.Add(a);
+                if (ui.axies.Count > 1) skeletonGraphic.gameObject.SetActive(false);
             }
 
-            public IEnumerator GetAxiesGenes(string axieId, bool UIUse, bool giftUse, int order)     // Lụm
+        public IEnumerator GetAxiesGenes(string axieId, bool UIUse, bool giftUse, int order)     // Lụm
             {
                 isFetchingGenes = true;
                 

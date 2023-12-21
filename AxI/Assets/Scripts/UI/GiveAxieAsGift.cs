@@ -15,10 +15,11 @@ public class GiveAxieAsGift : MonoBehaviour
     // Start is called before the first frame update
     private void OnEnable()
     {
+        UIController ui = GameObject.Find("UIController").GetComponent<UIController>();
         do
         {
             axieId = Random.Range(5, 11935533);
-            StartCoroutine(LevelManager.LInstance.GetAxiesGenes(axieId.ToString(),false,true, LevelManager.LInstance.axies.Count));
+            StartCoroutine(LevelManager.LInstance.GetAxiesGenes(axieId.ToString(),false,true, ui.axies.Count));
         } while (LevelManager.LInstance.flag == false);
 
         axieIdTxt.text = "#" + axieId.ToString();
@@ -53,6 +54,9 @@ public class GiveAxieAsGift : MonoBehaviour
         string[] args = { PlayerPrefs.GetString("Account"), uri };
         string response = await ContractManager.CInstance.SendTransaction("safeMint", args);
         Debug.Log(response);
+        Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        player.addAxie(axieId.ToString());
+        GameObject.Find("UIController").GetComponent<UIController>().UpdateUI();
         GameObject.Find("UIController").GetComponent<UIController>().updateList(axieId.ToString());
         gameObject.SetActive(false);
     }

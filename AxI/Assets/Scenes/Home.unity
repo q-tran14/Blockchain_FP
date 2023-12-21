@@ -964,6 +964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08e68ef9dad843e419af79b73e076de5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Won: 0
   axieSelect: 0
   spawnPos: {x: -10, y: -1}
   flag: 1
@@ -2224,7 +2225,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1622171744}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2084358707}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: BattleGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1622171744
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - DB
   - Gift
+  - Enemy
   layers:
   - Default
   - TransparentFX

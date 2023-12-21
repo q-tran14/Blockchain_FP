@@ -15,7 +15,6 @@ public class Metadata
 public class ScreenshotHandler : MonoBehaviour
 {
     public static ScreenshotHandler SInstance { get; private set; }
-    public NFTStorage.NFTStorageClient nftStorage;
     public string cid;
     public GameObject objScreenShot;
     [SerializeField] private string imagePath;
@@ -68,7 +67,7 @@ public class ScreenshotHandler : MonoBehaviour
         {
             Debug.Log(imagePath);
             finished = false;
-            nftStorage.UploadDataFromStringUnityWebrequest(imagePath);
+            NFTStorage.NFTStorageClient.NFTInstance.UploadDataFromStringUnityWebrequest(imagePath);
         }
     }
 
@@ -89,7 +88,7 @@ public class ScreenshotHandler : MonoBehaviour
         if (metadataPath != null || metadataPath != "" && finished == true)
         {
             finished = false;
-            nftStorage.UploadDataFromStringUnityWebrequest(metadataPath);
+            NFTStorage.NFTStorageClient.NFTInstance.UploadDataFromStringUnityWebrequest(metadataPath);
         }
     }
 }

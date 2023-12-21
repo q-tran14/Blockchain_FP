@@ -1,4 +1,4 @@
-using MongoDB.Bson;
+ using MongoDB.Bson;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -94,6 +94,7 @@ public class WalletLogin: MonoBehaviour
     public void checkDataInSmartContract()
     {
         string[] args = {account};
+        Debug.Log("Check User Axies");
         ContractManager.CInstance.GetUserAxieFromSmartContract(args);
     }
 

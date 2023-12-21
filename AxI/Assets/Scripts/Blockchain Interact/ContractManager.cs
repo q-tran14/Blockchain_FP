@@ -15,7 +15,9 @@ public class ContractManager : MonoBehaviour
     public static ContractManager CInstance { get; private set; }
     private void Awake()
     {
-        if (CInstance != null && CInstance != this) Destroy(this);
+        if (CInstance != null && CInstance != this) {
+            DestroyImmediate(gameObject);
+        }
         else
         {
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
