@@ -86,7 +86,7 @@ module.exports = {
       provider: () => new HDWalletProvider('napkin attend sun rigid recycle wood year random shine soldier disagree agree', 'https://sepolia.infura.io/v3/2346b430c7c3472a8f59c171fc9df5fa'),
       network_id: 11155111,// Sepolia's id
       confirmations: 2,    // # of confirmations to wait between deployments. (default: 0)
-      networkCheckTimeout: 10000000,
+      networkCheckTimeout: 100000000,
       timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
       skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
     }

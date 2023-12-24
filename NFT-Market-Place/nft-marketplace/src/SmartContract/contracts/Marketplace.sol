@@ -36,6 +36,7 @@ contract Marketplace {
     // Make item to offer on the marketplace
     function makeItem(uint256 _tokenId, uint256 _price) external{
         require(_price > 0, "Price must be greater than zero");
+        itemCount++;
         // transfer nft from seller account to this smart contract
         nft.transferFrom(msg.sender, address(this), _tokenId);
         // add new item to items mapping
@@ -47,6 +48,7 @@ contract Marketplace {
     // Cancel make item to offer on the marketplace
     function cancelMakeItem(uint256 _tokenId) external {
         require(items[_tokenId].price > 0, "Item does not exist on marketplace");
+        itemCount--;
         // transfer nft from this smart contract to seller account
         nft.transferFrom(address(this), msg.sender, _tokenId);
         // delete nft in items mapping

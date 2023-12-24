@@ -1,0 +1,7 @@
+[old]AxICToken address = "0xA0d5aCae47Cf9991062cBc5820d578ae5d52CD6C"
+[old]Marketplace address = "0xa4De5C749A7dC0Bc2EE0C9C71Cc469CA9FAEd4eF", tax = 10
+
+[new]AxICToken address = "0xa4A3182D250D204A343A45a62b018A0eEcFcc1D5"
+[new]Marketplace address = "0xE464C70BbdBb5122f6B40Ded3BB97B0314E9Fa99", tax = 25
+
+Get abi of smart contract: build/contracts => <name smart contract>.json => find "abi:"

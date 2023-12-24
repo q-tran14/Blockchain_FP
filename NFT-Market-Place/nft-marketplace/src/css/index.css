@@ -11,3 +11,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face{
+  font-family: "Changa-one";
+  font-style: normal;
+  font-weight: normal;
+  src: url("./changa-one.regular.ttf") format("truetype");
+}
+
+.font-face-changa-one{
+  font-family: "Changa-one";
+}
