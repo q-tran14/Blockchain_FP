@@ -9,7 +9,6 @@ const HomePage = ({ marketplace, axICToken }) => {
   const loadMarketplaceItems = async () => {
     
     const itemCount = await marketplace.itemCount();
-    
     let items = []
     for (let i = 1; i <= itemCount; i++) {
       const item = await marketplace.items(i)

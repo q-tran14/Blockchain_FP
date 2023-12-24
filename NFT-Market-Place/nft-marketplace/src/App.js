@@ -4,6 +4,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Navigation from './components/NavigationBar.js';
 import Marketplace from './components/Marketplace.js';
 import Collection from './components/Collection.js';
+import OnShelf from './components/OnShelf.js';
 import HomePage from './components/HomePage.js';
 import { Spinner } from 'react-bootstrap';
 import '../src/css/App.css'
@@ -77,6 +78,9 @@ function App() {
             <Route path = "/Collection" element = {
               <Collection marketplace={marketplace} axICToken={axICToken} account={account}/>
 
+            }/> 
+            <Route path = "/OnShelf" element = {
+                          <OnShelf marketplace={marketplace} axICToken={axICToken} account={account}/>
             }/> 
           </Routes>
           )}
