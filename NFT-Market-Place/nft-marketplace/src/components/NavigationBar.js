@@ -2,22 +2,19 @@ import {
     Link
 } from "react-router-dom";
 import { Navbar, Nav, Button, Container } from 'react-bootstrap'
-import icon from '../../src/images/Marketplace-icon.png';
+//import icon from '../../src/images/Marketplace-icon.png';
 import '../css/Navbar.css';
 
 const Navigation = ({ web3Handler, account }) => {
     return (
-        <Navbar expand="lg" bg="secondary" variant="dark">
+        <Navbar className="bg-img" expand="lg" bg="secondary" variant="dark">
             <Container className="font-face-changa-one">
-                    {/* < img src={icon} width="40" height="40" className="" alt="" /> */}
                 <Navbar.Collapse id="responsive-navbar-nav" >
-                    <Nav className="me-auto bg-img">
+                    <Nav className="me-auto center-navbar">
                         <Nav.Link as={Link} to="/HomePage">Home</Nav.Link>
                         <Nav.Link as={Link} to="/Marketplace">Marketplace</Nav.Link>
                         <Nav.Link as={Link} to="/Collection">Collection</Nav.Link>
                         <Nav.Link as={Link} to="/OnShelf">OnShelf</Nav.Link>
-                    </Nav>
-                    <Nav>
                         {account ? (
                             <Nav.Link
                                 href={`https://etherscan.io/address/${account}`}
