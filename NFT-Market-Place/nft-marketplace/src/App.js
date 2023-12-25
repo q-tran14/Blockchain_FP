@@ -60,33 +60,32 @@ function App() {
       <BrowserRouter>
         <div className='bg-full'>
           <Navigation web3Handler={web3Handler} account={account}/>
-          {loading ? (
+          <div className="flex justify-center body-page">
+            {loading ? (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
               <Spinner animation="border" style={{ display: 'flex' }} />
               <p className='mx-3 my-0'>Awaiting Metamask Connection...</p>
             </div>
           ) : (
-            <Routes>
-            <Route path = "/HomePage" element = {              
-              <HomePage marketplace={marketplace} axICToken={axICToken}/>
-              
-            }/>
-            <Route path = "/Marketplace" element = {              
-              <Marketplace marketplace={marketplace} axICToken={axICToken} account={account}/>
-            
-            }/>
-            <Route path = "/Collection" element = {
-              <Collection marketplace={marketplace} axICToken={axICToken} account={account}/>
-
-            }/> 
-            <Route path = "/OnShelf" element = {
-                          <OnShelf marketplace={marketplace} axICToken={axICToken} account={account}/>
-            }/> 
-          </Routes>
+              <Routes>
+              <Route path = "/HomePage" element = {              
+                <HomePage marketplace={marketplace} axICToken={axICToken}/>
+              }/>
+              <Route path = "/Marketplace" element = {              
+                <Marketplace marketplace={marketplace} axICToken={axICToken} account={account}/>
+              }/>
+              <Route path = "/Collection" element = {
+                <Collection marketplace={marketplace} axICToken={axICToken} account={account}/>
+              }/> 
+              <Route path = "/OnShelf" element = {
+                <OnShelf marketplace={marketplace} axICToken={axICToken} account={account}/>
+              }/> 
+              </Routes>
           )}
-         
+          </div>
         </div>
       </BrowserRouter>
+      
   );
 }
 

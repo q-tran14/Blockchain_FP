@@ -6,6 +6,7 @@ import { Navbar, Nav, Button, Container } from 'react-bootstrap'
 import '../css/Navbar.css';
 
 const Navigation = ({ web3Handler, account }) => {
+    
     return (
         <Navbar className="bg-img" expand="lg" bg="secondary" variant="dark">
             <Container className="font-face-changa-one">
