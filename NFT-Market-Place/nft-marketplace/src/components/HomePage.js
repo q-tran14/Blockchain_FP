@@ -50,10 +50,12 @@ const HomePage = ({ marketplace, axICToken }) => {
   )
   return (
     <div className="flex justify-center">
-      {items.length > 0 ?
+      {
+        items.length > 0 ?
         <div className="px-5 container">
           <Row xs={1} md={2} lg={4} className="g-4 py-5">
-            {items.map((item, idx) => (
+            {
+              items.map((item, idx) => (
               <Col key={idx} className="overflow-hidden">
                 <Card>
                   <Card.Img variant="top" src={item.image} />
@@ -62,7 +64,7 @@ const HomePage = ({ marketplace, axICToken }) => {
                     <Card.Text>
                       {item.description}
                     </Card.Text>
-                  </Card.Body>
+                  </Card.Body>  
                   <Card.Footer>
                     <div className='d-grid'>
                       <Button onClick={() => buyMarketItem(item)} variant="primary" size="lg">

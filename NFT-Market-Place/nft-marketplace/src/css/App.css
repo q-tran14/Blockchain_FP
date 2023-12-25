@@ -39,15 +39,15 @@
 }
 
 .bg-full{
-  min-width:1920px;
+  min-width:100%;
   height: 100%;
   background-image: url('../images/Background.png');
   background-size:cover;
 }
 
 .body-page{
-  width: 1792.5px;
-  height: 1000px;
+  width: 100%;
+  height: 100%;
   margin-left: 63.5px;
   flex-shrink: 0;
   border-radius: 0px 0px 250px 250px;
