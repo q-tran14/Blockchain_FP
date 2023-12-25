@@ -36,17 +36,17 @@ public class WalletLogin: MonoBehaviour
         PlayerPrefs.SetString("RPC", projectConfigSO.Rpc);
         
         // if remember me is checked, set the account to the saved account
-        #if !UNITY_EDITOR
-        if(PlayerPrefs.HasKey("RememberMe") && PlayerPrefs.HasKey("Account"))
-        {
-            if (PlayerPrefs.GetInt("RememberMe") == 1 && PlayerPrefs.GetString("Account") != "")
-            {
-                // move to next scene
-                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-                LoadHome();
-            }
-        }
-        #endif
+        //#if !UNITY_EDITOR
+        //if(PlayerPrefs.HasKey("RememberMe") && PlayerPrefs.HasKey("Account"))
+        //{
+        //    if (PlayerPrefs.GetInt("RememberMe") == 1 && PlayerPrefs.GetString("Account") != "")
+        //    {
+        //        // move to next scene
+        //        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //        LoadHome();
+        //    }
+        //}
+        //#endif
     }
 
     async public void OnLogin()

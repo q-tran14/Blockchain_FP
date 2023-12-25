@@ -3,7 +3,7 @@ import {ethers} from 'ethers';
 import { Row, Col, Card, Button } from 'react-bootstrap'
 import coinImg from "../images/coins1.png"
 const Marketplace = ({ marketplace, axICToken, account }) => {
-  const axieID = "#6593121";
+  const axieID = "#"+"6593121";
   const axiePrice = "0.0001";
   // Get axie's Image from CID of the image stored in metadata file
   const axieImageCid = "bafkreicir7mmj2bqq267a7swoprm4slxmrbclvcevg66suagifomnvhh3y";
