@@ -18,9 +18,10 @@ function App() {
   const [axICToken, setAxICToken] = useState({});
   const [marketplace, setMarketplace] = useState({});
 
-  // Smart Contract address - old
+  // Smart Contract address - new address
   const axICTokentAddress = "0xa4A3182D250D204A343A45a62b018A0eEcFcc1D5";
   const marketplaceAddress = "0xE464C70BbdBb5122f6B40Ded3BB97B0314E9Fa99";
+
   
   //Show smart contract information
   console.log('Marketplace abi:');
@@ -59,33 +60,23 @@ function App() {
       <BrowserRouter>
         <div className='bg-full'>
           <Navigation web3Handler={web3Handler} account={account}/>
-          {loading ? (
+          <div className="flex justify-center body-page">
+            {loading ? (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
               <Spinner animation="border" style={{ display: 'flex' }} />
               <p className='mx-3 my-0'>Awaiting Metamask Connection...</p>
             </div>
           ) : (
-            <Routes>
-            <Route path = "/HomePage" element = {              
-              <HomePage marketplace={marketplace} axICToken={axICToken}/>
-              
-            }/>
-            <Route path = "/Marketplace" element = {              
-              <Marketplace marketplace={marketplace} axICToken={axICToken} account={account}/>
-            
-            }/>
-            <Route path = "/Collection" element = {
-              <Collection marketplace={marketplace} axICToken={axICToken} account={account}/>
-
-            }/> 
-            <Route path = "/OnShelf" element = {
-              <OnShelf marketplace={marketplace} axICToken={axICToken} account={account}/>
-            }/> 
-          </Routes>
+         <><Routes>
+                <Route path="/Marketplace" element={<Marketplace marketplace={marketplace} axICToken={axICToken} account={account} />} />
+                <Route path="/Collection" element={<Collection marketplace={marketplace} axICToken={axICToken} account={account} />} />
+                <Route path="/OnShelf" element={<OnShelf marketplace={marketplace} axICToken={axICToken} account={account} />} />
+              </Routes></>
           )}
-         
+          </div>
         </div>
       </BrowserRouter>
+      
   );
 }
 
