@@ -24,10 +24,10 @@ function App() {
 
   
   //Show smart contract information
-  console.log('Marketplace abi:');
-  console.log(marketplaceAbi.abi);
-  console.log('NFT abi:');
-  console.log(axICTokenAbi.abi);
+  //console.log('Marketplace abi:');
+  //console.log(marketplaceAbi.abi);
+  //console.log('NFT abi:');
+  //console.log(axICTokenAbi.abi);
 
   const loadContracts = async (signer) => {
     // Create smart contract instance
@@ -60,19 +60,21 @@ function App() {
       <BrowserRouter>
         <div className='bg-full'>
           <Navigation web3Handler={web3Handler} account={account}/>
-          <div className="flex justify-center body-page">
-            {loading ? (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
-              <Spinner animation="border" style={{ display: 'flex' }} />
-              <p className='mx-3 my-0'>Awaiting Metamask Connection...</p>
-            </div>
-          ) : (
-         <><Routes>
+          <div className="body-page">
+            <div className="flex justify-center body-page">
+              {loading ? (
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
+                  <Spinner animation="border" style={{ display: 'flex' }} />
+                  <p className='mx-3 my-0'>Awaiting Metamask Connection...</p>
+                </div>
+              ) : (
+              <Routes>
                 <Route path="/Marketplace" element={<Marketplace marketplace={marketplace} axICToken={axICToken} account={account} />} />
                 <Route path="/Collection" element={<Collection marketplace={marketplace} axICToken={axICToken} account={account} />} />
                 <Route path="/OnShelf" element={<OnShelf marketplace={marketplace} axICToken={axICToken} account={account} />} />
-              </Routes></>
-          )}
+              </Routes>
+            )}
+            </div>
           </div>
         </div>
       </BrowserRouter>

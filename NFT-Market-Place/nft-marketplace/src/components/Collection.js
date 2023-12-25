@@ -6,58 +6,60 @@ const {utils} = 'ethers';
 
 const Collection = ({ marketplace, axICToken, account }) => {
   const [loading, setLoading] = useState(true)
-  const [items, setItems] = useState([])
+  const [axies, setAxies] = useState([])
   const loadUserCollection = async () => {
-    
-    const axies = await axICToken.getAllToken(account);
-    axies.forEach(async (a) => {
-        // get uri url from nft contract
-        const uri = await axICToken.tokenURI(a);
-        // use uri to fetch the nft metadata stored on ipfs 
-        const response = await fetch(uri);
-        const metadata = await response.json();
-        const totalPrice = await marketplace.getTotalPrice(a);
-        //Define item
-        const item = {
-          totalPrice,
-          itemId: a,
-          seller: account,
-          name: metadata.name,
-          description: metadata.description,
-          image: metadata.image
-        }
-        // Add item to items array
-        items.push(item);
+    // Get all token account have  
+    const tokens = await axICToken.getAllToken(account);
+    console.log(tokens);
+    let axies = [];
+    tokens.forEach(async (a) => {
+      // get uri url from nft contract
+      const uri = await axICToken.tokenURI(a);
+      // use uri to fetch the nft metadata stored on ipfs 
+      const response = await fetch(uri);
+      const metadata = await response.json();
+      console.log(metadata.image);
+      let imgURI = "https://ipfs.io/ipfs/" + metadata.image.slice(7);
+      //Define item
+      const axie = {
+        tokenId: a,
+        axieId: metadata.name,
+        image: imgURI
+      }
+
+      console.log(axie);
+      // Add item to items array
+      axies.push(axie);
     });
     
-    setLoading(false)
-    setItems(items)
-
-    if (loading) return (
-        <div className="flex justify-center">
-          {items.length > 0 ?
-            <div className="px-5 py-3 container">
-                <h2>Listed</h2>
-              <Row xs={1} md={2} lg={4} className="g-4 py-3">
-                {items.map((item, idx) => (
-                  <Col key={idx} className="overflow-hidden">
-                    <Card>
-                      <Card.Img variant="top" src={item.image} />
-                      <Card.Footer>{utils.formatEther(item.totalPrice)} ETH</Card.Footer>
-                    </Card>
-                  </Col>
-                ))}
-              </Row>
-            </div>
-            : (
-              <main style={{ padding: "1rem 0" }}>
+    setLoading(false);
+    setAxies(axies);
+  }
+  useEffect(() => {loadUserCollection()},[]);
+  if (loading) return (
+    <main style={{ padding: "1rem 0" }}>
+      <h2>Loading...</h2>
+    </main>
+  )
+  return (
+    <div className="flex justify-center">
+      {axies.length > 0 ?
+        axies.map((axie) => (
+        <div className="axieItem">
+          <div className="axieImg">
+            <img id="axieImg" src={axie.image} alt=''/>
+          </div>
+          <div className="axieInfo">
+            <h3 id="axieID">{axie.name}</h3>
+          </div>
+          <Button className="buy-sellBtn" onClick="" variant="outline-light">Sell</Button>
+        </div>
+      )) : (
+        <main style={{ padding: "1rem 0" }}>
                 <h2>No listed assets</h2>
               </main>
-            )}
-        </div>
-    )
-  }
-
-  return ("");
+      )}
+    </div>
+    );
 }
 export default Collection
