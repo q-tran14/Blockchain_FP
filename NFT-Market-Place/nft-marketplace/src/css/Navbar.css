@@ -37,8 +37,10 @@ button{
     margin-left: 200px;
     color: white;
     font-family: 'Changa-one';
-    font-size: 20px;
-
+    font-size: 30px;
 }
 
+#loginBtn{
+    font-size: 20px;
+}
 

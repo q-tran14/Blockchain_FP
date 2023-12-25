@@ -77,7 +77,7 @@ const HomePage = ({ marketplace, axICToken }) => {
         </div>
         : (
           <main style={{ padding: "1rem 0" }}>
-            <h2>No listed assets</h2>
+            <h2>There are no Axies listed for sale yet</h2>
           </main>
         )}
     </div>
