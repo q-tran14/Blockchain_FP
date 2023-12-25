@@ -55,7 +55,6 @@ function App() {
     loadContracts(signer);
   }
 
-  
   return (
       <BrowserRouter>
         <div className='bg-full'>
@@ -80,7 +79,7 @@ function App() {
 
             }/> 
             <Route path = "/OnShelf" element = {
-                          <OnShelf marketplace={marketplace} axICToken={axICToken} account={account}/>
+              <OnShelf marketplace={marketplace} axICToken={axICToken} account={account}/>
             }/> 
           </Routes>
           )}
