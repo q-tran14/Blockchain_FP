@@ -60,7 +60,7 @@ public class WalletLogin: MonoBehaviour
         // sign message
         string signature = "";
 
-        Player user = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>(); 
+        Player user = GameObject.Find("Player").GetComponent<Player>(); 
         try
         {
             signature = await Web3Wallet.Sign(message);

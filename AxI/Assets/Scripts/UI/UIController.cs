@@ -50,7 +50,7 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        player = GameObject.Find("Player").GetComponent<Player>();
         addressPlayer.text = player.getPlayerAccout().Substring(0, 7) + "..." + player.getPlayerAccout().Substring(player.getPlayerAccout().Length - 5, 5);
         UpdateUI();
         if (player.getTotalAxies() == 0) notice.SetActive(true);
