@@ -1,28 +1,28 @@
 # Blockchain_FP
 ## How to run the project
 ### Game
- - Install [Unity Hub](https://unity.com/download)
- - Install [Unity Editor 2022.3.11f1](https://unity.com/releases/editor/whats-new/2022.3.11#release-notes)
+#### *For Using Unity Editor*
+- Install [Unity Hub](https://unity.com/download)
+- Install [Unity Editor 2022.3.11f1](https://unity.com/releases/editor/whats-new/2022.3.11#release-notes)
+
+#### *For play in Build version*
 
 ### Smart Contract
-- Run terminal or git bash and install truffle
+- Run terminal or git bash, move to "Blockchain-FP\NFT-Market-Place\nft-marketplace\src\SmartContract"
+- Install truffle
 > npm intstall -g truffle
 
 - For compile smart contract
 > truffle compile
 
-<!--Step 1:
-- For deploy AxICToken smart contract
-> truffle migrate --t 1 --network sepolia --reset
+- For deploy AxICToken smart contract -> Marketplace smart contract (During this process, if the network is weak, the deployment process will have a "Polling Block Tracker" error or a "Timeout" error)
+> truffle migrate --network sepolia --reset
 
-Step 2:
-- Copy AxICToken smart contract address 
-- For deploy Marketplace smart contract
-> truffle migrate --f 2 --network sepolia --reset
 
-*Notice: --reset: Redeploy the smart contract because it has been deployed once before. -->
+### Web
+- Run terminal or git bash, move to nft-marketplace folder
+- Install every package
+> npm install
 
-## Configuration
-### Game
-
-### Smart Contract
+- Run web project
+> npm start
