@@ -17,7 +17,7 @@
   ![Imgur](https://i.imgur.com/jHfWbYO.png)
 
 ### *For play in Build version*
-- Double click on "Game Jam.exe" in Build folder in "Blockchain_FP\AxI\Build" and enjoy the game.
+- Double click on "AxI.exe" in Build folder in "Blockchain_FP\AxI\Build" and enjoy the game.
 
 $\color{red}{\textbf{Notice}}$
 - There are a number of processes in the game, you should wait for them to finish loading:
