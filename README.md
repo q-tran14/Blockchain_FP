@@ -3,6 +3,13 @@
 ### *For Using Unity Editor*
 - Install [Unity Hub](https://unity.com/download)
 - Install [Unity Editor 2022.3.11f1](https://unity.com/releases/editor/whats-new/2022.3.11#release-notes)
+- Steps:
+  - Step 1: Click "Open" in Unity Hub
+  ![Imgur](https://i.imgur.com/LW0tJPH.png)
+  - Step 2: Choose AxI folder
+  ![Imgur](https://i.imgur.com/2QD5mHy.png)
+  - Step 3,4: Move to Wallet Login scene and click play button
+  ![Imgur](https://i.imgur.com/jHfWbYO.png)
 
 ### *For play in Build version*
 - Double click on "Game Jam.exe" in Build folder in "Blockchain_FP\AxI\Build" and enjoy the game.
