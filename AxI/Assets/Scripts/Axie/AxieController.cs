@@ -38,7 +38,7 @@ public class AxieController : MonoBehaviour
     void Start()
     {
         float hp = 500;
-        float dmg = 15 ;
+        float dmg = 300;
         data = new AxieData(hp, dmg);
 
         previousState = "";
