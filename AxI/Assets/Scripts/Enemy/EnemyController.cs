@@ -26,17 +26,24 @@ public class EnemyController : MonoBehaviour
     public Enemy enemy;
     public string currentState;
     public string previousState;
+
     public SkeletonAnimation eneAni;
+
     public bool collisionPlayer = false;
     public bool move = false;
     public float speed = 2;
     public HealthBar axieHealth;
+
+    public float countDown;
+    public bool canCount;
+    public GameObject axieObj;
     void OnEnable()
     {
         float hp = 500;
-        float dmg = 20;
-        enemy = new Enemy(hp, dmg);
+        float dmg = Random.Range(100, 301);
+        enemy = new Enemy(hp, dmg-30);
 
+        Debug.Log("Enemy dmg: " + dmg);
         previousState = "";
         currentState = "action/idle/normal";
         eneAni.state.SetAnimation(0, currentState, true);
@@ -62,6 +69,21 @@ public class EnemyController : MonoBehaviour
             changeState("action/idle/normal");
             Die();
         }
+        if (collisionPlayer == true && canCount == true && axieObj != null)
+        {
+            countDown += 0.01f;
+            if (countDown >= eneAni.state.GetCurrent(0).AnimationEnd)
+            {
+                Debug.Log("Enemy animation end: " + eneAni.state.GetCurrent(0).AnimationEnd);
+                if (axieObj.GetComponent<AxieController>().data.hp > 0)
+                {
+                    axieObj.GetComponent<AxieController>().data.hp -= enemy.dmg;
+                    axieHealth.OnHPChange(enemy.dmg);
+                    Debug.Log("Enemy HP: -" + enemy.dmg);
+                    countDown = 0;
+                }
+            }
+        }
     }
 
     public void changeState(string newState)
@@ -81,6 +103,8 @@ public class EnemyController : MonoBehaviour
         axieHealth = GameObject.Find("Axie Health Bar").GetComponent<HealthBar>();
         if (collision.collider.transform.gameObject.tag == "Player" && collision.collider.GetComponent<AxieController>().data.hp > 0)
         {
+            countDown = 0;
+            canCount = true;
             Debug.Log(collision.collider.tag);
             collisionPlayer = true;
             changeState("attack/melee/normal-attack");
@@ -93,25 +117,30 @@ public class EnemyController : MonoBehaviour
         if (collision.collider.transform.gameObject.tag == "Player" && collision.collider.GetComponent<AxieController>().data.hp > 0)
         {
             Debug.Log("Start fight with axie");
-            if (eneAni.state.GetCurrent(0).IsComplete == true)
-            {
-                if (collision.collider.GetComponent<AxieController>().data.hp - enemy.dmg > 0) {
-                    collision.collider.gameObject.GetComponent<AxieController>().data.hp -= enemy.dmg;
-                    axieHealth.OnHPChange(enemy.dmg);
-                    Debug.Log("Axie HP: -" + enemy.dmg);
-                } 
-            }
+            StartFighting(collision.gameObject);
         }
+    }
+
+    public void OnCollisionExit2D(Collision2D collision)
+    {
+        collisionPlayer = false;
+        StartFighting(null);
     }
 
     public void Die()
     {
+        collisionPlayer = false;
         Debug.Log("Enemy died");
         eneAni.state.SetAnimation(0, "action/idle/normal", false);
         eneAni.GetComponent<MeshRenderer>().materials[0].SetColor("Tint", new Color(82, 69, 69, 255)); ;
 
         GameObject.Find("Game Manager").GetComponent<GameManager>().Won();
         Destroy(gameObject, 100);
+    }
+
+    public void StartFighting(GameObject axie)
+    {
+        axieObj = axie;
     }
 }
 

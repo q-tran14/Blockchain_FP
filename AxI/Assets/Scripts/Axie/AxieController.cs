@@ -38,9 +38,9 @@ public class AxieController : MonoBehaviour
     void Start()
     {
         float hp = 500;
-        float dmg = 300;
+        float dmg = Random.Range(100,301);
         data = new AxieData(hp, dmg);
-
+        Debug.Log("Axie dmg: " + dmg);
         previousState = "";
         currentState = "action/idle/normal";
         axieSke = gameObject.GetComponent<SkeletonAnimation>();
@@ -73,9 +73,10 @@ public class AxieController : MonoBehaviour
         }
         //Bug
         if (collisionEnemy == true && canCount == true && enemyObj != null) { 
-            countDown += 0.001f;
+            countDown += 0.01f;
             if (countDown >= axieSke.state.GetCurrent(0).AnimationEnd)
             {
+                Debug.Log("Axie animation end: " + axieSke.state.GetCurrent(0).AnimationEnd);
                 if (enemyObj.GetComponent<EnemyController>().enemy.HP > 0)
                 {
                     enemyObj.GetComponent<EnemyController>().enemy.HP -= data.dmg;
@@ -149,6 +150,7 @@ public class AxieController : MonoBehaviour
 
     public void Die()
     {
+        collisionEnemy = false;
         Debug.Log("Die");
         axieSke.state.SetAnimation(0, "action/idle/normal", false);
 

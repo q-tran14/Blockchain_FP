@@ -153,7 +153,7 @@ Transform:
   m_GameObject: {fileID: 3357163}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -348,7 +348,7 @@ Transform:
   m_GameObject: {fileID: 64634680}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -740,7 +740,7 @@ Transform:
   m_GameObject: {fileID: 395312634}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -998,6 +998,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 844704325}
     m_Modifications:
+    - target: {fileID: 2152070985303972236, guid: 604a796e2b618944b99f88830634926d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2152070985303972236, guid: 604a796e2b618944b99f88830634926d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2337138301056510990, guid: 604a796e2b618944b99f88830634926d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1081,6 +1089,10 @@ PrefabInstance:
     - target: {fileID: 5089489318628179210, guid: 604a796e2b618944b99f88830634926d, type: 3}
       propertyPath: m_Name
       value: Axie Health Bar
+      objectReference: {fileID: 0}
+    - target: {fileID: 5089489318628179210, guid: 604a796e2b618944b99f88830634926d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6651228230916446201, guid: 604a796e2b618944b99f88830634926d, type: 3}
       propertyPath: targetCanvas
@@ -1186,10 +1198,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1498021006}
-  - {fileID: 2133712316}
-  - {fileID: 1207681921}
   - {fileID: 640538906}
   - {fileID: 1670380277}
+  - {fileID: 2133712316}
+  - {fileID: 1207681921}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1306,7 +1318,7 @@ Transform:
   m_GameObject: {fileID: 1166593092}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1744,7 +1756,7 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
+  m_AllowDynamicResolution: 1
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -1854,6 +1866,18 @@ PrefabInstance:
     - target: {fileID: 3572038185366832336, guid: 40f62cd60e9f61e4b9ab83b909736e66, type: 3}
       propertyPath: m_Name
       value: Enemy Health Bar
+      objectReference: {fileID: 0}
+    - target: {fileID: 3572038185366832336, guid: 40f62cd60e9f61e4b9ab83b909736e66, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223914751721551427, guid: 40f62cd60e9f61e4b9ab83b909736e66, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223914751721551427, guid: 40f62cd60e9f61e4b9ab83b909736e66, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8972070424833954970, guid: 40f62cd60e9f61e4b9ab83b909736e66, type: 3}
       propertyPath: m_Pivot.x
@@ -1970,7 +1994,7 @@ Transform:
   m_GameObject: {fileID: 1625901510}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2284,8 +2308,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 150}
-  m_SizeDelta: {x: 800, y: 93.3643}
+  m_AnchoredPosition: {x: 0, y: 69}
+  m_SizeDelta: {x: 800, y: 253.0652}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1902606901
 MonoBehaviour:
@@ -2320,7 +2344,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: YOU WON !!!
+  m_Text: YOU HAVE BEEN DEFEATED !!!
 --- !u!222 &1902606902
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2359,7 +2383,7 @@ Transform:
   m_GameObject: {fileID: 2039274365}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -42,6 +42,7 @@ public class UIController : MonoBehaviour
     public Button nextButton;
     public Button prevButton;
     public Button exitButton;
+    public Button battleButon;
     public GameObject claim;
     public GameObject notice;
     public int currentAxiesIndex = 0;
@@ -53,9 +54,13 @@ public class UIController : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<Player>();
         addressPlayer.text = player.getPlayerAccout().Substring(0, 7) + "..." + player.getPlayerAccout().Substring(player.getPlayerAccout().Length - 5, 5);
         UpdateUI();
+        exitButton.onClick.AddListener(ExitGame);
         if (player.getTotalAxies() == 0) notice.SetActive(true);
         else
         {
+            nextButton.interactable = false;
+            prevButton.interactable = false;
+            battleButon.interactable = false;
             Debug.Log("Load List");
             loadList(player.getListAxies());
         }
@@ -68,9 +73,6 @@ public class UIController : MonoBehaviour
     public void loadList(List<string> l) {
         // Load list of axies
         StartCoroutine(LoadAxiesSequentially(l));
-        nextButton.onClick.AddListener(NextAxie);
-        prevButton.onClick.AddListener(PrevAxie);
-        exitButton.onClick.AddListener(ExitGame);
     }
 
     public void updateList(string axieId)
@@ -85,7 +87,13 @@ public class UIController : MonoBehaviour
         }
         currentAxiesIndex = 0;
         LevelManager.LInstance.axieSelect = axies[currentAxiesIndex].id;
+        nextButton.interactable = true;
+        prevButton.interactable = true;
+        battleButon.interactable = true;
+        nextButton.onClick.AddListener(NextAxie);
+        prevButton.onClick.AddListener(PrevAxie);
     }
+
     private IEnumerator updateListAxie(string axieId)
     {
         player.addAxie(axieId);
@@ -112,6 +120,7 @@ public class UIController : MonoBehaviour
         if (currentAxiesIndex == 0)
         {
             axies[currentAxiesIndex].axie.SetActive(false);
+            Debug.Log(axies[currentAxiesIndex].axie.activeSelf);
             currentAxiesIndex = axies.Count - 1;
             axies[currentAxiesIndex].axie.SetActive(true);
         }

@@ -70,28 +70,32 @@
         }
 
         void SpawnSkeletonAnimation(Axie2dBuilderResult builderResult)
+        {
+            Debug.Log("Enter spawn animation skeleton");
+            GameObject go = new GameObject("DemoAxie");
+            go.transform.localPosition = new Vector3(spawnPos.x, spawnPos.y, -2f);
+            SkeletonAnimation runtimeSkeletonAnimation = SkeletonAnimation.NewSkeletonAnimationGameObject(builderResult.skeletonDataAsset);
+            //runtimeSkeletonAnimation.gameObject.layer = LayerMask.NameToLayer("Player");
+            runtimeSkeletonAnimation.gameObject.tag = "Player";
+            runtimeSkeletonAnimation.transform.SetParent(go.transform, false);
+            runtimeSkeletonAnimation.transform.localScale = new Vector3(-0.5f,0.5f,1);
+
+            runtimeSkeletonAnimation.gameObject.AddComponent<AutoBlendAnimController>();
+            runtimeSkeletonAnimation.gameObject.AddComponent<AxieController>();
+            runtimeSkeletonAnimation.state.SetAnimation(0, "action/idle/normal", true);
+
+            if (builderResult.adultCombo.ContainsKey("body") &&
+                builderResult.adultCombo["body"].Contains("mystic") &&
+                builderResult.adultCombo.TryGetValue("body-class", out var bodyClass) &&
+                builderResult.adultCombo.TryGetValue("body-id", out var bodyId))
             {
-                GameObject go = new GameObject("DemoAxie");
-                go.transform.localPosition = new Vector3(spawnPos.x, spawnPos.y, 0f);
-                SkeletonAnimation runtimeSkeletonAnimation = SkeletonAnimation.NewSkeletonAnimationGameObject(builderResult.skeletonDataAsset);
-                //runtimeSkeletonAnimation.gameObject.layer = LayerMask.NameToLayer("Player");
-                runtimeSkeletonAnimation.gameObject.tag = "Player";
-                runtimeSkeletonAnimation.transform.SetParent(go.transform, false);
-                runtimeSkeletonAnimation.transform.localScale = new Vector3(-0.5f,0.5f,1);
-
-                runtimeSkeletonAnimation.gameObject.AddComponent<AutoBlendAnimController>();
-                runtimeSkeletonAnimation.gameObject.AddComponent<AxieController>();
-                runtimeSkeletonAnimation.state.SetAnimation(0, "action/idle/normal", true);
-
-                if (builderResult.adultCombo.ContainsKey("body") &&
-                    builderResult.adultCombo["body"].Contains("mystic") &&
-                    builderResult.adultCombo.TryGetValue("body-class", out var bodyClass) &&
-                    builderResult.adultCombo.TryGetValue("body-id", out var bodyId))
-                {
-                    runtimeSkeletonAnimation.gameObject.AddComponent<MysticIdController>().Init(bodyClass, bodyId);
-                }
-                runtimeSkeletonAnimation.skeleton.FindSlot("shadow").Attachment = null;
+                runtimeSkeletonAnimation.gameObject.AddComponent<MysticIdController>().Init(bodyClass, bodyId);
             }
+            runtimeSkeletonAnimation.skeleton.FindSlot("shadow").Attachment = null;
+            Debug.Log("Finish spawn animation skeleton");
+            Debug.Log(runtimeSkeletonAnimation.GetComponent<MeshRenderer>().material.shader.name);    
+        }
+
         void SpawnSkeletonGraphicForGift(Axie2dBuilderResult builderResult, string axieId, int order)        // Load Axie for Gift
             {
                 RectTransform rootTFforGift = GameObject.Find("Axie").GetComponent<RectTransform>();
@@ -114,7 +118,7 @@
                 }
             }
         void SpawnSkeletonGraphic(Axie2dBuilderResult builderResult, string axieId, int order)        // Load Axie for Home
-            {
+        {
                 RectTransform rootTFforHome = GameObject.Find("ListAxie").GetComponent<RectTransform>();
                 var skeletonGraphic = SkeletonGraphic.NewSkeletonGraphicGameObject(builderResult.skeletonDataAsset, rootTFforHome, builderResult.sharedGraphicMaterial);
                 skeletonGraphic.rectTransform.sizeDelta = new Vector2(1, 1);
@@ -134,11 +138,10 @@
                 {
                     skeletonGraphic.gameObject.AddComponent<MysticIdGraphicController>().Init(bodyClass, bodyId);
                 }
-
                 Axie a = new Axie(order, axieId, skeletonGraphic.gameObject);
                 ui.axies.Add(a);
                 if (ui.axies.Count > 1) skeletonGraphic.gameObject.SetActive(false);
-            }
+        }
 
         public IEnumerator GetAxiesGenes(string axieId, bool UIUse, bool giftUse, int order)     // Lụm
             {

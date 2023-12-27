@@ -49,7 +49,7 @@ public class ContractManager : MonoBehaviour
         string response = await EVM.Call(PlayerPrefs.GetString("ChainID"), PlayerPrefs.GetString("Network"), contract.address, contract.abi, method, obj);
     }
 
-    async public void GetUserAxieFromSmartContract(string[] args)
+    async public Task<bool> GetUserAxieFromSmartContract(string[] args)
     {
         string obj = JsonConvert.SerializeObject(args);
         string response = await EVM.Call(PlayerPrefs.GetString("ChainID"), PlayerPrefs.GetString("Network"), contract.address, contract.abi, "getAllToken", obj);
@@ -57,27 +57,30 @@ public class ContractManager : MonoBehaviour
         if (!response.Equals("[]")) // Load Axie ID to Player.AxieIDs - Old player
         {
             List<string> tokenIDs = JsonConvert.DeserializeObject<List<string>>(response);
-            Debug.Log(tokenIDs[0]);
-            List<string> tokenURIs = new List<string>();
 
             foreach (string token in tokenIDs)
             {
                 string res = await EVM.Call(PlayerPrefs.GetString("ChainID"), PlayerPrefs.GetString("Network"), contract.address, contract.abi, "tokenURI", $"[\"{token}\"]");
                 Debug.Log(res);
-                tokenURIs.Add(res);
-            }
-
-            foreach (string uri in tokenURIs)
-            {
-                // Do Something with NFT.Storage Client to get metadata.json => get axieID (name)
-                UnityWebRequest wr = UnityWebRequest.Get(uri);
-                await wr.SendWebRequest();
-
+                UnityWebRequest wr = new UnityWebRequest();
+                do
+                {
+                    wr = UnityWebRequest.Get(res);
+                    wr.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+                    wr.timeout = 10;
+                    await wr.SendWebRequest();
+                    Debug.Log("Web request Download Handler data is null? " + wr.downloadHandler.data.IsUnityNull());
+                } while (wr.downloadHandler.data.IsUnityNull() == true);
+                
                 Metadata metadata = JsonUtility.FromJson<Metadata>(System.Text.Encoding.UTF8.GetString(wr.downloadHandler.data));
-
                 player.addAxie(metadata.name);
             }
+
+            Debug.Log("Finish");
+            if (player.getListAxies().Count == tokenIDs.Count) return true;
+            else return false;
         }
+        return true;
     }
 }
 

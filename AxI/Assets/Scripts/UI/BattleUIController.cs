@@ -51,6 +51,7 @@ public class BattleUIController : MonoBehaviour
         var scene = await SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
         scene.allowSceneActivation = false;
         await Task.Delay(5000);
+        Debug.Log("Return to home");
         Time.timeScale = 1; 
         scene.allowSceneActivation = true;
     }

@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        StartCoroutine(LevelManager.LInstance.GetAxiesGenes(LevelManager.LInstance.axieSelect, false, false, 0));
+        StartCoroutine(StartBattle());
     }
 
     // Update is called once per frame
@@ -24,5 +24,12 @@ public class GameManager : MonoBehaviour
     {
         LevelManager.LInstance.Won = false;
         ui.End(false);
+    }
+
+    public IEnumerator StartBattle()
+    {
+        Time.timeScale = 0;
+        yield return StartCoroutine(LevelManager.LInstance.GetAxiesGenes(LevelManager.LInstance.axieSelect, false, false, 0));
+        Time.timeScale = 1;
     }
 }

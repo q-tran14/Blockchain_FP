@@ -15,14 +15,13 @@ using Debug = UnityEngine.Debug;
 public class WalletLogin: MonoBehaviour
 {
     ProjectConfigScriptableObject projectConfigSO = null;
-    public Toggle rememberMe;
     public string account;
 
     public GameObject background;
 
     public GameObject panel;
     public GameObject loginBtn;
-    public GameObject toggleBox;
+    public GameObject exitBtn;
 
     public GameObject loading;
     public GameObject loadingVideo;
@@ -60,7 +59,8 @@ public class WalletLogin: MonoBehaviour
         // sign message
         string signature = "";
 
-        Player user = GameObject.Find("Player").GetComponent<Player>(); 
+        Player user = GameObject.Find("Player").GetComponent<Player>();
+        loginBtn.GetComponent<Button>().interactable = false;
         try
         {
             signature = await Web3Wallet.Sign(message);
@@ -72,18 +72,33 @@ public class WalletLogin: MonoBehaviour
             {
                 // save account
                 PlayerPrefs.SetString("Account", account);
-                if (rememberMe.isOn) PlayerPrefs.SetInt("RememberMe", 1);
-                else PlayerPrefs.SetInt("RememberMe", 0);
                 user.setAccount(account);
                 DontDestroyOnLoad(user);
-                checkDataInSmartContract();
 
-                await Task.Delay(5000);
-                LoadHome();
+                // Disable UI
+                panel.SetActive(false);
+                loginBtn.SetActive(false);
+                exitBtn.SetActive(false);
+                loading.SetActive(true);
+                
+                //Get account information
+                checkDataInSmartContract();
+            }
+            else
+            {
+                loginBtn.GetComponent<Button>().interactable = false;
+                panel.SetActive(true);
+                loginBtn.SetActive(true);
+                exitBtn.SetActive(true);
+                loading.SetActive(false);
+                loginError.SetActive(true);
+                await Task.Delay(3000);
+                loginError.SetActive(false);
             }
         }
         catch (System.Exception e)
         {
+            loginBtn.GetComponent<Button>().interactable = false;
             Debug.LogException(e);
             loginError.SetActive(true);
             await Task.Delay(3000);
@@ -91,11 +106,12 @@ public class WalletLogin: MonoBehaviour
         }
     }
 
-    public void checkDataInSmartContract()
+    public async void checkDataInSmartContract()
     {
         string[] args = {account};
         Debug.Log("Check User Axies");
-        ContractManager.CInstance.GetUserAxieFromSmartContract(args);
+        await ContractManager.CInstance.GetUserAxieFromSmartContract(args);
+        LoadHome();
     }
 
     public async void LoadHome()
@@ -104,14 +120,8 @@ public class WalletLogin: MonoBehaviour
         var scene = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
         scene.allowSceneActivation = false;
         
-        // Disable UI
-        panel.SetActive(false);
-        loginBtn.SetActive(false);
-        toggleBox.SetActive(false);
-
         // Enable loading Object
         loadingVideo.SetActive(true);
-        loading.SetActive(true);
         // Disable background
         SceneLoader.SInstance.Run(background.GetComponent<Image>());
         
