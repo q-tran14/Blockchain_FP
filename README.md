@@ -1,4 +1,9 @@
 # How to run the project
+- Set Up Wallet: Switch network to Sepolia testnet.
+- [Get 0.5 Eth in Sepolia testnet](https://sepoliafaucet.com/?fbclid=IwAR3HcAhWmIggoP36euqGIRaK2Wx6z0CMt0ffMkAE4UYHwzp73SpnR3le-cA)
+- Another faucet:
+  - [Infura sepolia faucet](https://www.infura.io/faucet/sepolia?fbclid=IwAR2sPL4hwK6pysWysW_q29CQvDf2seQCuZgjOC_u3ZPwEhBbB6j-euydjcM)
+  - [ChainLink](https://faucets.chain.link/)
 ## Game
 ### *For Using Unity Editor*
 - Install [Unity Hub](https://unity.com/download)
