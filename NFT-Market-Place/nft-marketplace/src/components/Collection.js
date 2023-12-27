@@ -11,7 +11,7 @@ const Collection = ({ marketplace, axICToken, account }) => {
     // Get all token account have  
     const tokens = await axICToken.getAllToken(account);
     console.log(tokens);
-    let axies = [];
+    let axiesL = [];
     tokens.forEach(async (a) => {
       // get uri url from nft contract
       const uri = await axICToken.tokenURI(a);
@@ -29,11 +29,13 @@ const Collection = ({ marketplace, axICToken, account }) => {
 
       console.log(axie);
       // Add item to items array
-      axies.push(axie);
+      axiesL.push(axie);
+      console.log(axies.length);
     });
     
     setLoading(false);
-    setAxies(axies);
+    setAxies(axiesL);
+    console.log(axies.length);
   }
   useEffect(() => {loadUserCollection()},[]);
   if (loading) return (
@@ -56,7 +58,7 @@ const Collection = ({ marketplace, axICToken, account }) => {
         </div>
       )) : (
         <main style={{ padding: "1rem 0" }}>
-                <h2>No listed assets</h2>
+                <h2>No listed assets {axies.length}</h2>
               </main>
       )}
     </div>

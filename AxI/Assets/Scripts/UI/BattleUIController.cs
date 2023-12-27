@@ -44,7 +44,6 @@ public class BattleUIController : MonoBehaviour
         {
             wonOrLose.text = "YOU HAVE BEEN DEFEATED !!!";
         }
-        returnHome.onClick.AddListener(ReturnHome);
     }
 
     public async void ReturnHome()
