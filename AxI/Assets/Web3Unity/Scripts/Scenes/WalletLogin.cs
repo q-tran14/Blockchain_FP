@@ -14,7 +14,7 @@ using Debug = UnityEngine.Debug;
 
 public class WalletLogin: MonoBehaviour
 {
-    ProjectConfigScriptableObject projectConfigSO = null;
+    public ProjectConfigScriptableObject projectConfigSO;
     public string account;
 
     public GameObject background;
@@ -27,25 +27,12 @@ public class WalletLogin: MonoBehaviour
     public GameObject loadingVideo;
     public GameObject loginError;
     void Start() {
-        projectConfigSO = (ProjectConfigScriptableObject)Resources.Load("ProjectConfigData", typeof(ScriptableObject));
+        //projectConfigSO = (ProjectConfigScriptableObject)Resources.Load("ProjectConfigData", typeof(ScriptableObject));
         PlayerPrefs.SetString("ProjectID", projectConfigSO.ProjectId);
         PlayerPrefs.SetString("ChainID", projectConfigSO.ChainId);
         PlayerPrefs.SetString("Chain", projectConfigSO.Chain);
         PlayerPrefs.SetString("Network", projectConfigSO.Network);
         PlayerPrefs.SetString("RPC", projectConfigSO.Rpc);
-        
-        // if remember me is checked, set the account to the saved account
-        //#if !UNITY_EDITOR
-        //if(PlayerPrefs.HasKey("RememberMe") && PlayerPrefs.HasKey("Account"))
-        //{
-        //    if (PlayerPrefs.GetInt("RememberMe") == 1 && PlayerPrefs.GetString("Account") != "")
-        //    {
-        //        // move to next scene
-        //        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        //        LoadHome();
-        //    }
-        //}
-        //#endif
     }
 
     async public void OnLogin()

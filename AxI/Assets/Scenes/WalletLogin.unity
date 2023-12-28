@@ -980,6 +980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52913904a0404486cbc6143d85432c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectConfigSO: {fileID: 11400000, guid: 553bb8c89262bdb4992e94fdb543be7d, type: 2}
   account: 
   background: {fileID: 1193241696}
   panel: {fileID: 355102142}
