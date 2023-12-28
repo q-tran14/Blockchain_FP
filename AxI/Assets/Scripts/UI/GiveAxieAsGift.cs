@@ -14,10 +14,11 @@ public class GiveAxieAsGift : MonoBehaviour
     public bool uploaded;
     public Text earnTxt;
     public Button earnBtn;
+    public UIController ui;
     // Start is called before the first frame update
     private void OnEnable()
     {
-        UIController ui = GameObject.Find("UIController").GetComponent<UIController>();
+        ui = GameObject.Find("UIController").GetComponent<UIController>();
         do
         {
             axieId = Random.Range(5, 11935533);
@@ -36,10 +37,16 @@ public class GiveAxieAsGift : MonoBehaviour
             if (p.transform.gameObject.tag == "Gift") Destroy(p.transform.gameObject);
 
         }
+        ui.battleButon.interactable = true;
+        ui.nextButton.interactable = true;
+        ui.prevButton.interactable = true;
     }
 
     public async void ClaimAxie()
     {
+        ui.battleButon.interactable = false;
+        ui.nextButton.interactable=false;
+        ui.prevButton.interactable=false;
         earnBtn.interactable = false;
         earnTxt.text = "Earning";
         ScreenshotHandler.SInstance.objScreenShot = flag;
