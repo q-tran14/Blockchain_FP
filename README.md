@@ -34,7 +34,7 @@ $\color{red}{\textbf{Notice}}$
 - For compile smart contract
 > truffle compile
 
-- For deploy AxICToken smart contract -> Marketplace smart contract (During this process, if the network is weak, the deployment process will have a "Polling Block Tracker" error or a "Timeout" error)
+- For deploy AxICToken smart contract -> Marketplace smart contract (During this process, if the network is weak, the deployment process will have a "Polling Block Tracker" error or a "Timeout" error, just run again)
 > truffle migrate --network sepolia --reset
 
 ## Web
