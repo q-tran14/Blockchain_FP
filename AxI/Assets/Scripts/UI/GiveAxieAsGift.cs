@@ -67,9 +67,10 @@ public class GiveAxieAsGift : MonoBehaviour
         do
         {
             status = await EVM.TxStatus(PlayerPrefs.GetString("ChainID"), PlayerPrefs.GetString("Network"), response, PlayerPrefs.GetString("RPC"));
-            Debug.Log(status);
+            Debug.Log("Transaction Status: "+status);
         } while (status != "success");
         Player player = GameObject.FindGameObjectWithTag("PlayerUser").GetComponent<Player>();
+        Debug.Log("Add axie in GiveAxieAsGift");
         player.addAxie(axieId.ToString());
         GameObject.Find("UIController").GetComponent<UIController>().UpdateUI();
         GameObject.Find("UIController").GetComponent<UIController>().updateList(axieId.ToString());

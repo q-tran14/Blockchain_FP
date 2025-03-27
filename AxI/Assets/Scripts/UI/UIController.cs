@@ -62,6 +62,7 @@ public class UIController : MonoBehaviour
             prevButton.interactable = false;
             battleButon.interactable = false;
             Debug.Log("Load List");
+            Debug.Log(player.getListAxies().ToString());
             loadList(player.getListAxies());
         }
         if (LevelManager.LInstance.Won == true) notice.SetActive(true);
@@ -82,11 +83,13 @@ public class UIController : MonoBehaviour
 
     private IEnumerator LoadAxiesSequentially(List<string> axiesL) {
         for (int i = 0; i < axiesL.Count; i++) {
+            Debug.Log(axiesL[i]);
             yield return StartCoroutine(LevelManager.LInstance.GetAxiesGenes(axiesL[i].ToString(), true, false, i));
             currentAxiesIndex = i;
         }
         currentAxiesIndex = 0;
         LevelManager.LInstance.axieSelect = axies[currentAxiesIndex].id;
+        Debug.Log(LevelManager.LInstance.axieSelect);
         nextButton.interactable = true;
         prevButton.interactable = true;
         battleButon.interactable = true;
@@ -96,7 +99,9 @@ public class UIController : MonoBehaviour
 
     private IEnumerator updateListAxie(string axieId)
     {
-        player.addAxie(axieId);
+        Debug.Log("Add axie in UIController");
+        // player.addAxie(axieId);
+        if (LevelManager.LInstance.axieSelect == "0") LevelManager.LInstance.axieSelect = axieId;
         yield return StartCoroutine(LevelManager.LInstance.GetAxiesGenes(axieId.ToString(), true, false, axies.Count));
     }
     public void NextAxie() {

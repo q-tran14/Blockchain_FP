@@ -1173,7 +1173,7 @@ MonoBehaviour:
   player: {fileID: 0}
   contract:
     name: AxICToken
-    address: 0xa4A3182D250D204A343A45a62b018A0eEcFcc1D5
+    address: 0x49195c3723dac9B794780bac3c450ec7631c7822
     abi: '[ { "inputs": [ { "internalType": "address", "name": "initialOwner", "type":
       "address" } ], "stateMutability": "nonpayable", "type": "constructor" }, {
       "inputs": [], "name": "ERC721EnumerableForbiddenBatchMint", "type": "error"

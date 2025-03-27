@@ -162,6 +162,7 @@
                 if (wr.error == null)
                 {
                     var result = wr.downloadHandler != null ? wr.downloadHandler.text : null;
+                    Debug.Log("Raw API Response: " + result);
                     if (!string.IsNullOrEmpty(result))
                     {
                         JObject jResult = JObject.Parse(result);

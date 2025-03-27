@@ -1513,6 +1513,7 @@ MonoBehaviour:
   uploaded: 0
   earnTxt: {fileID: 430838054}
   earnBtn: {fileID: 515783922}
+  ui: {fileID: 0}
 --- !u!1 &1261997053
 GameObject:
   m_ObjectHideFlags: 0
@@ -2522,7 +2523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8d34e5d1a42fac4fbe75f139aa8bc6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  apiToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEI3QTQ0RUE2MWE2OEY5QmI3OUM5QTVBNEU0YTA5ODg3OUY0NDYxZGUiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTcwMjA5NjY0NzI5OCwibmFtZSI6IkF4SSJ9.E6hEuQpq2Bc6bEEmKjlW7cj3O5m1VN-ZjKbuHczS7g8
+  apiToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIxOWRiZGQwMy1mNzE3LTQyZjktYjg5NS1jNTg2M2Q0MTMwNWIiLCJlbWFpbCI6InRyYW5xdWFuZ3F1YW4uaXRAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjEsImlkIjoiRlJBMSJ9LHsiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjEsImlkIjoiTllDMSJ9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZSwic3RhdHVzIjoiQUNUSVZFIn0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6IjA2MjU4NGFhMzVmMGYwMzBhYTU1Iiwic2NvcGVkS2V5U2VjcmV0IjoiOTAzMzFlYWJhZjY0N2ZkYzUwZDk0NGQzYzcwNDVkNGQwMDA3MjA2MGFlNzViZjkzNjU5ZGY1ODI4NmYzZTY1NyIsImV4cCI6MTc3NDUwNjg1NH0.E0_nG8sqbD9vYD7MR7Bm-Tny437eR35E2UvTfXYnP1k
 --- !u!114 &1786484489
 MonoBehaviour:
   m_ObjectHideFlags: 0

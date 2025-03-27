@@ -10,6 +10,7 @@ using System.Web;
 using System.Text;
 using NFTStorage.JSONSerialization;
 using UnityEngine.Networking;
+using Newtonsoft.Json.Linq;
 
 namespace NFTStorage.JSONSerialization
 {
@@ -121,7 +122,7 @@ namespace NFTStorage
     {
         public static NFTStorage.NFTStorageClient NFTInstance { get; private set; }
         // nft.storage API endpoint
-        private static readonly string nftStorageApiUrl = "https://api.nft.storage/";
+        private static readonly string nftStorageApiUrl = "https://api.pinata.cloud/pinning/pinFileToIPFS";
 
         // HTTP client to communicate with nft.storage
         private static readonly HttpClient nftClient = new HttpClient();
@@ -130,8 +131,7 @@ namespace NFTStorage
         private static readonly HttpClient ipfsClient = new HttpClient();
 
         // nft.storage API key
-        [SerializeField] private string apiToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEI3QTQ0RUE2MWE2OEY5QmI3OUM5QTVBNEU0YTA5ODg3OUY0NDYxZGUiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTcwMjA5NjY0NzI5OCwibmFtZSI6IkF4SSJ9.E6hEuQpq2Bc6bEEmKjlW7cj3O5m1VN-ZjKbuHczS7g8";
-
+        [SerializeField] private string apiToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIxOWRiZGQwMy1mNzE3LTQyZjktYjg5NS1jNTg2M2Q0MTMwNWIiLCJlbWFpbCI6InRyYW5xdWFuZ3F1YW4uaXRAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjEsImlkIjoiRlJBMSJ9LHsiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjEsImlkIjoiTllDMSJ9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZSwic3RhdHVzIjoiQUNUSVZFIn0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6IjA2MjU4NGFhMzVmMGYwMzBhYTU1Iiwic2NvcGVkS2V5U2VjcmV0IjoiOTAzMzFlYWJhZjY0N2ZkYzUwZDk0NGQzYzcwNDVkNGQwMDA3MjA2MGFlNzViZjkzNjU5ZGY1ODI4NmYzZTY1NyIsImV4cCI6MTc3NDUwNjg1NH0.E0_nG8sqbD9vYD7MR7Bm-Tny437eR35E2UvTfXYnP1k";
         /**
         <summary>"Start" is called before the first frame update for initializing "NFTStorageClient"</summary>
         */
@@ -248,6 +248,7 @@ namespace NFTStorage
             {
                 Debug.Log("Received: " + uwr.downloadHandler.text);
                 NFTStorageUploadResponse res = JsonUtility.FromJson<NFTStorageUploadResponse>(uwr.downloadHandler.text);
+                Debug.Log(res.value.cid);
                 ScreenshotHandler.SInstance.cid = res.value.cid;
                 Debug.Log("CID: " + res.value.cid);
                 ScreenshotHandler.SInstance.finished = true;
@@ -370,13 +371,51 @@ namespace NFTStorage
         <summary>Upload a file using "nft.storage" unitywebrequest </summary>
         */
         
-        public void UploadDataFromStringUnityWebrequest(string path)
+        public void UploadDataFromStringUnityWebrequest(string path) // S?A
         {
             string requestUri = nftStorageApiUrl + "/upload";
             uwr = null;
+            Debug.Log("API: " + requestUri);
             Debug.Log(path);
-            StartCoroutine(PostRequest(requestUri, path));
+            //StartCoroutine(PostRequest(requestUri, path));
+            StartCoroutine(UploadToPinata(path));
             StartCoroutine(UploadProgressCoroutine());
+        }
+
+        IEnumerator UploadToPinata(string filePath)
+        {
+            byte[] fileData = System.IO.File.ReadAllBytes(filePath);
+            string fileName = System.IO.Path.GetFileName(filePath);
+            string contentType = filePath.EndsWith(".json") ? "application/json" : "image/png";
+
+            List<IMultipartFormSection> formData = new List<IMultipartFormSection>
+            {
+                new MultipartFormFileSection("file", fileData, fileName, contentType),
+                new MultipartFormDataSection("network", "public")
+            };
+
+            uwr = UnityWebRequest.Post(nftStorageApiUrl, formData);
+            uwr.SetRequestHeader("Authorization", $"Bearer {apiToken}");
+
+            yield return uwr.SendWebRequest();
+
+            if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError("L?i upload: " + uwr.error);
+            }
+            else
+            {
+                Debug.Log("Upload thành công! Response: " + uwr.downloadHandler.text);
+
+                JObject jsonResponse = JObject.Parse(uwr.downloadHandler.text);
+                string ipfsHash = jsonResponse["IpfsHash"].ToString();
+                Debug.Log("IPFS Hash: " + ipfsHash);
+
+                // C?p nh?t CID vào game
+                ScreenshotHandler.SInstance.cid = ipfsHash;
+                Debug.Log(ScreenshotHandler.SInstance.cid);
+                ScreenshotHandler.SInstance.finished = true;
+            }
         }
     }
 }
