@@ -1,10 +1,12 @@
-# How to run the project
-- Set Up Wallet: Switch network to Sepolia testnet.
-- [Get 0.5 Eth in Sepolia testnet](https://sepoliafaucet.com/?fbclid=IwAR3HcAhWmIggoP36euqGIRaK2Wx6z0CMt0ffMkAE4UYHwzp73SpnR3le-cA)
-- Another faucet:
-  - [Infura sepolia faucet](https://www.infura.io/faucet/sepolia?fbclid=IwAR2sPL4hwK6pysWysW_q29CQvDf2seQCuZgjOC_u3ZPwEhBbB6j-euydjcM)
-  - [ChainLink](https://faucets.chain.link/)
-## Game
+# Setup before play game
+- [Add Metamask into Chrome](https://chromewebstore.google.com/detail/nkbihfbeogaeaoehlefnkodbefgpgknn?utm_source=item-share-cb)
+- Create account
+- Add Sepolia testnet to Metamask: [Guide](https://developers.moralis.com/how-to-add-the-sepolia-network-to-metamask-full-guide/)
+- Use faucet to earn coin (use for transaction):
+  - [Superchain Dev Console | Faucet](https://console.optimism.io/faucet)
+  - [Google Cloud Web3 - Ethereum Sepolia Faucet](https://cloud.google.com/application/web3/faucet/ethereum/sepolia)
+- Have fun!
+<!--## Game
 ### *For Using Unity Editor*
 - Install [Unity Hub](https://unity.com/download)
 - Install [Unity Editor 2022.3.11f1](https://unity.com/releases/editor/whats-new/2022.3.11#release-notes)
@@ -43,4 +45,4 @@ $\color{red}{\textbf{Notice}}$
 > npm install
 
 - Run web project
-> npm start
+> npm start -->
